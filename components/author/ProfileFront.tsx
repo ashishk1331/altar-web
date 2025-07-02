@@ -25,7 +25,7 @@ export default function ProfileFront({
 				<P>
 					{firstName} {lastName}
 				</P>
-				<P>Let's run away to Milan!</P>
+				<P>Let&apos;s run away to Milan!</P>
 				<XStack className="w-full gap-8 mt-4">
 					<P>130 followers</P>
 					<P>34 following</P>
