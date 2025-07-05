@@ -1,23 +1,24 @@
-"use client";
-
+import AuthorFeed from "@/components/author/AuthorFeed";
+import AuthorProfile from "@/components/author/AuthorProfile";
 import Meta from "@/components/author/Meta";
-import ProfileFront from "@/components/author/ProfileFront";
-import Feed from "@/components/home/Feed";
-import { useUserStore } from "@/store/userStore";
+import AFallback from "@/components/blocks/AFallback";
+import { Id } from "@/convex/_generated/dataModel";
 
-export default function AuthorPage() {
-	const user = useUserStore((state) => state.user);
+type AuthorPageProps = {
+	params: Promise<{ id: Id<"users"> }>;
+};
+
+export default async function AuthorPage({ params }: AuthorPageProps) {
+	const { id } = await params;
 
 	return (
 		<>
-			<ProfileFront
-				avatarURL={user?.picture || ""}
-				firstName={user?.given_name || ""}
-				lastName={user?.family_name || ""}
-			/>
-			<Meta />
+			<AuthorProfile authorId={id} />
+			<AFallback>
+				<Meta />
+			</AFallback>
 			<hr className="text-neutral-200" />
-			<Feed />
+			<AuthorFeed authorId={id} />
 		</>
 	);
 }

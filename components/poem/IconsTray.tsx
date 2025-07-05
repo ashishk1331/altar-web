@@ -5,8 +5,19 @@ import Button from "../ui/Button";
 import { P } from "../ui/Heading";
 import { XStack } from "../ui/Stack";
 import AFallback from "../blocks/AFallback";
+import { Id } from "@/convex/_generated/dataModel";
 
-export default function IconsTray() {
+type IconsTrayProps = {
+	likeCount: number;
+	commentCount: number;
+	poemId: Id<"poems">;
+};
+
+export default function IconsTray({
+	likeCount,
+	commentCount,
+	poemId,
+}: IconsTrayProps) {
 	const isAlreadyBookmarked = false;
 	const isAlreadyLiked = false;
 
@@ -20,11 +31,11 @@ export default function IconsTray() {
 					size={iconSize}
 					className={isAlreadyLiked ? "fill-red-500 text-red-500" : ""}
 				/>
-				<P>122</P>
+				{likeCount > 0 && <P>{likeCount}</P>}
 			</Button>
 			<Button variant="outline">
 				<MessageSquare size={iconSize} />
-				<P>8</P>
+				{commentCount > 0 && <P>{commentCount}</P>}
 			</Button>
 			<AFallback>
 				<Button

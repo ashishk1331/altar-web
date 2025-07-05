@@ -1,11 +1,16 @@
 import Poem from "../poem/Poem";
 import { YStack } from "../ui/Stack";
+import { PoemWithAuthor } from "@/types/ComplexTypes";
 
-export default function Feed() {
+type FeedProps = {
+	poems: PoemWithAuthor[];
+};
+
+export default function Feed({ poems = [] }: FeedProps) {
 	return (
 		<YStack className="w-full divide-y divide-neutral-200">
-			{"abcdefghij".split("").map((char) => (
-				<Poem key={char} />
+			{poems.map((poem) => (
+				<Poem key={poem._id} poem={poem} />
 			))}
 		</YStack>
 	);

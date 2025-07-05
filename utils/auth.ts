@@ -9,5 +9,11 @@ export function decodeJWT(token: string) {
 
 export function subsetUser(originalPayload: Record<string, string>): User {
 	const { email, picture, given_name, family_name, name } = originalPayload;
-	return { email, picture, given_name, family_name, name };
+	return {
+		email,
+		picture,
+		firstName: given_name,
+		lastName: family_name,
+		name,
+	} as User;
 }

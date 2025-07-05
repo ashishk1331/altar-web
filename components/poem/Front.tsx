@@ -1,19 +1,17 @@
 import { H3, P } from "../ui/Heading";
 import { YStack } from "../ui/Stack";
+import { PoemWithAuthor } from "@/types/ComplexTypes";
 
-export default function Front() {
+type FrontProps = {
+	poem: PoemWithAuthor;
+};
+
+export default function Front({ poem }: FrontProps) {
+	const { title, body } = poem;
 	return (
 		<YStack className="items-start my-8 gap-8">
-			<H3>Title to the poem</H3>
-			<P>
-				Bridge tanto free-market refrigerator j-pop smart-chrome camera shanty
-				town soul-delay sign math. BASE jump numinous nodal point systemic
-				sub-orbital car into denim face forwards industrial grade. Physical
-				refrigerator spook nano-dome skyscraper San Francisco sentient
-				smart-corporation math-motion office papier-mache car artisanal. Tube
-				DIY human engine convenience store hacker fetishism network post-urban
-				tattoo Tokyo refrigerator.
-			</P>
+			<H3>{title}</H3>
+			<P>{body}</P>
 		</YStack>
 	);
 }

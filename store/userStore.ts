@@ -1,13 +1,8 @@
+import { Doc } from "@/convex/_generated/dataModel";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type User = {
-	name: string;
-	email: string;
-	picture: string;
-	given_name: string;
-	family_name: string;
-};
+export type User = Doc<"users">;
 
 export type UserStoreState = {
 	user: User | null;

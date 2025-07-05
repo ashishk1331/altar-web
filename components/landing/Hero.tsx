@@ -25,6 +25,7 @@ export default function Hero() {
 				height={720}
 				alt="Banner image."
 				className="scale-110 md:scale-none"
+				priority
 			/>
 		</YStack>
 	);

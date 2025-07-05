@@ -19,9 +19,6 @@ import AFallback from "./AFallback";
 export default function Header() {
 	return (
 		<header className="sticky top-0 flex items-center gap-4 w-full justify-between py-4 bg-white">
-			<AFallback fallback={<div />}>
-				<AvatarWithDropdown />
-			</AFallback>
 			<Link href="/home">
 				<H3>Altar</H3>
 			</Link>
@@ -37,6 +34,7 @@ export default function Header() {
 							<Search size={16} className="text-black" />
 						</Button>
 					</Link>
+					<AvatarWithDropdown />
 				</XStack>
 			</AFallback>
 		</header>
@@ -56,9 +54,9 @@ function AvatarWithDropdown() {
 					variant="md"
 				/>
 			</DropdownTrigger>
-			<DropdownContent left>
-				<YStack className="p-2 bg-white rounded shadow-xl mr-2 items-start gap-0 *:w-full">
-					<Link href="/author/123" className="w-full">
+			<DropdownContent>
+				<YStack className="p-2 bg-white rounded shadow-xl items-start gap-0 *:w-full">
+					<Link href={`/author/${user?._id || ""}`} className="w-full">
 						<Button variant="outline" className="w-full hover:bg-neutral-50">
 							<UserRound size={iconSize - 4} />
 							<P>Profile</P>

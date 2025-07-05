@@ -11,12 +11,23 @@ import { P } from "@/components/ui/Heading";
 import { XStack, YStack } from "@/components/ui/Stack";
 import { iconSize } from "@/constants/tokens";
 import AFallback from "@/components/blocks/AFallback";
+import { Doc } from "@/convex/_generated/dataModel";
+import { CommentWithAuthor } from "@/types/ComplexTypes";
+import { formatDistance } from "date-fns";
 
 type CommentProps = {
-	isAuthor?: boolean;
+	isAuthor: boolean;
+	comment: CommentWithAuthor;
 };
 
-export default function Comment({ isAuthor = false }: CommentProps) {
+export default function Comment({ isAuthor = false, comment }: CommentProps) {
+	const {
+		body,
+		author: { name },
+		authorId,
+		_creationTime,
+	} = comment;
+
 	return (
 		<XStack className="w-full gap-4 items-start">
 			<Avatar
@@ -27,20 +38,20 @@ export default function Comment({ isAuthor = false }: CommentProps) {
 			/>
 			<YStack className="w-full">
 				<XStack className="w-full">
-					<Link href={`/author/${123}`}>
-						<P>Boring Mule</P>
+					<Link href={`/author/${authorId}`}>
+						<P>{name}</P>
 					</Link>
 					{isAuthor && (
 						<CircleCheck size={iconSize - 4} className="text-black" />
 					)}
-					<P className="text-neutral-400">4m ago</P>
+					<P className="text-neutral-400">
+						{formatDistance(_creationTime, Date.now(), { addSuffix: true })}
+					</P>
 					<AFallback>
 						<XStack className="ml-auto">
 							<DropdownWrapper>
 								<DropdownTrigger>
-									<Button variant="outline">
-										<Ellipsis size={16} className="text-black" />
-									</Button>
+									<Ellipsis size={16} className="text-black" />
 								</DropdownTrigger>
 								<DropdownContent>
 									<YStack className="p-2 bg-white rounded shadow-md mr-2">
@@ -57,11 +68,7 @@ export default function Comment({ isAuthor = false }: CommentProps) {
 						</XStack>
 					</AFallback>
 				</XStack>
-				<P>
-					Cardboard DIY savant semiotics plastic disposable otaku rebar. Knife
-					3D-printed alcohol military-grade singularity refrigerator car
-					cardboard grenade dead.
-				</P>
+				<P>{body}</P>
 			</YStack>
 		</XStack>
 	);

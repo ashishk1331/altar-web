@@ -8,17 +8,21 @@ import { decodeJWT, subsetUser } from "@/utils/auth";
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { useShallow } from "zustand/shallow";
 import { useRouter } from "next/navigation";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 export default function SignInPage() {
 	const router = useRouter();
+	const upsertUser = useMutation(api.users.upsertUser);
 	const [setUser, setLastLoggedIn] = useUserStore(
 		useShallow((state) => [state.setUser, state.setLastLoggedIn]),
 	);
 
-	function handleSuccess(creds: CredentialResponse) {
+	async function handleSuccess(creds: CredentialResponse) {
 		const decoded_creds = decodeJWT(creds.credential ?? "");
 		const user = subsetUser(decoded_creds);
-		setUser(user);
+		const dbUser = await upsertUser(user);
+		setUser(dbUser);
 		setLastLoggedIn(Date.now());
 		callToast.success("Logged in successfully.");
 		router.push("/home");

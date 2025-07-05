@@ -6,12 +6,14 @@ type ProfileFrontProps = {
 	avatarURL: string;
 	firstName: string;
 	lastName: string;
+	bio: string;
 };
 
 export default function ProfileFront({
 	avatarURL,
 	firstName,
 	lastName,
+	bio,
 }: ProfileFrontProps) {
 	return (
 		<XStack className="w-full gap-4 my-8 items-start">
@@ -25,7 +27,7 @@ export default function ProfileFront({
 				<P>
 					{firstName} {lastName}
 				</P>
-				<P>Let&apos;s run away to Milan!</P>
+				{bio && <P>{bio}</P>}
 				<XStack className="w-full gap-8 mt-4">
 					<P>130 followers</P>
 					<P>34 following</P>
