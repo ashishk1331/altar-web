@@ -1,7 +1,5 @@
 import AuthorFeed from "@/components/author/AuthorFeed";
 import AuthorProfile from "@/components/author/AuthorProfile";
-import Meta from "@/components/author/Meta";
-import AFallback from "@/components/blocks/AFallback";
 import { Id } from "@/convex/_generated/dataModel";
 
 type AuthorPageProps = {
@@ -14,9 +12,6 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
 	return (
 		<>
 			<AuthorProfile authorId={id} />
-			<AFallback>
-				<Meta />
-			</AFallback>
 			<hr className="text-neutral-200" />
 			<AuthorFeed authorId={id} />
 		</>

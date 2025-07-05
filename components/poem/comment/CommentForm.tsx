@@ -4,25 +4,51 @@ import Button from "@/components/ui/Button";
 import { XStack } from "@/components/ui/Stack";
 import Textarea from "@/components/ui/Textarea";
 import { iconSize } from "@/constants/tokens";
-import { useUserStore } from "@/store/userStore";
+import { useAction } from "@/hooks/useAction";
+import { Doc } from "@/convex/_generated/dataModel";
+import { useState } from "react";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { callToast } from "@/components/ui/Toast";
 
-export default function CommentForm() {
-	const user = useUserStore(state => state.user);
+type CommentFormProps = {
+	author: Doc<"users">;
+	poem: Doc<"poems">;
+};
 
-	if (!user) return null;
+export default function CommentForm({ author, poem }: CommentFormProps) {
+	const [body, setBody] = useState("");
+	const writeComment = useMutation(api.comments.writeComment);
+	const { picture, _id: authorId, name } = author;
+	const { _id: poemId } = poem;
 
-	const { picture } = user;
+	const { loading: isLoading, action: handleSubmit } = useAction(
+		async function () {
+			if (!body) {
+				throw new Error("Write few words before.");
+			}
+			const ID = await writeComment({ authorId, poemId, body });
+			if (!ID) throw new Error("Unable to create the poem.");
+			callToast.success("Comment published.");
+			setBody("");
+		},
+	);
 
 	return (
 		<XStack className="mt-4">
-			<Avatar
-				src={picture}
-				alt="image of user"
-				width={64}
-				variant="lg"
+			<Avatar src={picture} alt={`Avatar of ${name}`} width={64} variant="lg" />
+			<Textarea
+				value={body}
+				onChange={(e) => setBody(e.target.value)}
+				className="w-full"
+				placeholder="comment here..."
 			/>
-			<Textarea className="w-full" placeholder="comment here..." />
-			<Button variant="icon">
+			<Button
+				variant="icon"
+				isLoading={isLoading}
+				disabled={isLoading}
+				onClick={handleSubmit}
+			>
 				<Send size={iconSize - 4} className="text-black" />
 			</Button>
 		</XStack>

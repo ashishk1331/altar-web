@@ -4,6 +4,8 @@ import ProfileFront from "./ProfileFront";
 import { Id } from "@/convex/_generated/dataModel";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import AFallback from "../blocks/AFallback";
+import Meta from "./Meta";
 
 type AuthorProfileProps = {
 	authorId: Id<"users">;
@@ -15,11 +17,11 @@ export default function AuthorProfile({ authorId }: AuthorProfileProps) {
 	if (!user) return null;
 
 	return (
-		<ProfileFront
-			avatarURL={user.picture}
-			firstName={user.firstName}
-			lastName={user.lastName}
-			bio={user.bio}
-		/>
+		<>
+			<ProfileFront author={user} />
+			<AFallback>
+				<Meta author={user} />
+			</AFallback>
+		</>
 	);
 }
