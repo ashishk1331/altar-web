@@ -19,12 +19,10 @@ export default function ProfileFront({ author }: ProfileFrontProps) {
 					{firstName} {lastName}
 				</P>
 				{bio && <P>{bio}</P>}
-				{(followerCount > 0 || followingCount > 0) && (
-					<XStack className="w-full gap-8 mt-4">
-						<P>{followerCount} followers</P>
-						<P>{followingCount} following</P>
-					</XStack>
-				)}
+				<XStack className="w-full gap-8 mt-4">
+					<P>{followerCount} followers</P>
+					<P>{followingCount} following</P>
+				</XStack>
 			</YStack>
 		</XStack>
 	);

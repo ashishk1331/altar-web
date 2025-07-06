@@ -23,14 +23,12 @@ export default function Profile() {
 		resetUser();
 	}
 
+	if (!user) return null;
+
 	return (
 		<>
 			<BackNav title="Profile" />
-			<ProfileFront
-				avatarURL={user?.picture || ""}
-				firstName={user?.given_name || ""}
-				lastName={user?.family_name || ""}
-			/>
+			<ProfileFront author={user} />
 			<YStack className="items-start gap-2 my-4 *:p-2">
 				{navItems.slice(0, -1).map(({ label, href, Icon }) => (
 					<Link

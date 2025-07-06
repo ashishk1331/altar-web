@@ -23,7 +23,7 @@ export default function PostsFeed({ authorId }: PostsFeedProps) {
 		<>
 			<Feed showSettings={true} poems={results}></Feed>
 			{status === "CanLoadMore" && (
-				<Button onClick={() => loadMore(10)}>Load more</Button>
+				<Button onClick={() => loadMore(initialNumItems)}>Load more</Button>
 			)}
 		</>
 	);

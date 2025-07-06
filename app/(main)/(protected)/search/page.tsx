@@ -1,3 +1,5 @@
+"use client";
+
 import { Search } from "lucide-react";
 import BackNav from "@/components/blocks/BackNav";
 import Feed from "@/components/home/Feed";
