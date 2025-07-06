@@ -1,5 +1,6 @@
-import { mutation, query } from "./_generated/server";
+import { query } from "./_generated/server";
 import { v } from "convex/values";
+import { mutation } from "./functions";
 
 export const readCommentsOfPoem = query({
 	args: { poemId: v.id("poems") },
@@ -35,20 +36,6 @@ export const writeComment = mutation({
 });
 
 export const deleteComment = mutation({
-	args: { poemId: v.id("poems"), authorId: v.id("users") },
-	handler: async (ctx, args) => {
-		const comment = await ctx.db
-			.query("comments")
-			.filter((q) =>
-				q.and(
-					q.eq(q.field("poemId"), args.poemId),
-					q.eq(q.field("authorId"), args.authorId),
-				),
-			)
-			.first();
-
-		if (!comment) return null;
-
-		return await ctx.db.delete(comment._id);
-	},
+	args: { commentId: v.id("comments") },
+	handler: async (ctx, args) => await ctx.db.delete(args.commentId),
 });

@@ -8,10 +8,16 @@ type FrontProps = {
 
 export default function Front({ poem }: FrontProps) {
 	const { title, body } = poem;
+	const lines = body.split("\n");
+
 	return (
 		<YStack className="items-start my-8 gap-8">
 			<H3>{title}</H3>
-			<P>{body}</P>
+			<YStack className="w-full items-start gap-1">
+				{lines.map((line) => (
+					<P key={line}>{line}</P>
+				))}
+			</YStack>
 		</YStack>
 	);
 }

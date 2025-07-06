@@ -16,28 +16,28 @@ import { formatDistance } from "date-fns";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useAction } from "@/hooks/useAction";
-import { Id } from "@/convex/_generated/dataModel";
 import { callToast } from "@/components/ui/Toast";
 
 type CommentProps = {
 	isAuthor: boolean;
 	comment: CommentWithAuthor;
-	poemId: Id<"poems">;
-	authorId: Id<"users">;
 };
 
-export default function Comment({ isAuthor = false, comment, poemId, authorId: userId }: CommentProps) {
+export default function Comment({ isAuthor = false, comment }: CommentProps) {
 	const {
+		_id: commentId,
 		body,
 		author: { name, picture },
 		authorId,
 		_creationTime,
 	} = comment;
 	const deleteComment = useMutation(api.comments.deleteComment);
-	const { loading: isLoading, action: handleDelete } = useAction(async function () {
-		await deleteComment({ poemId, authorId: userId });
-		callToast.success("Deleted your words.")
-	})
+	const { loading: isLoading, action: handleDelete } = useAction(
+		async function () {
+			await deleteComment({ commentId });
+			callToast.success("Deleted your words.");
+		},
+	);
 
 	return (
 		<XStack className="w-full gap-4 items-start">

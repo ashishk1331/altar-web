@@ -51,47 +51,40 @@ triggers.register("followers", async (ctx, change) => {
 	switch (change.operation) {
 		case "insert": {
 			const { followee, follower } = change.newDoc;
-
-			// Increase follower count
-			const followerProfile = await ctx.db.get(follower);
-			if (followerProfile) {
-				const newFollowerCount = Math.max(
-					0,
-					(followerProfile.followerCount ?? 0) - 1,
-				);
-				await ctx.db.patch(follower, { followerCount: newFollowerCount });
-			}
-
-			// Increase following count
+			// Increase followee's follower count
 			const followeeProfile = await ctx.db.get(followee);
 			if (followeeProfile) {
-				const newFollowerCount = Math.max(
-					0,
-					(followeeProfile.followingCount ?? 0) - 1,
-				);
-				await ctx.db.patch(follower, { followerCount: newFollowerCount });
+				const newFollowerCount = (followeeProfile.followerCount ?? 0) + 1;
+				await ctx.db.patch(followee, { followerCount: newFollowerCount });
 			}
-
+			// Increase follower's following count
+			const followerProfile = await ctx.db.get(follower);
+			if (followerProfile) {
+				const newFollowingCount = (followerProfile.followingCount ?? 0) + 1;
+				await ctx.db.patch(follower, { followingCount: newFollowingCount });
+			}
 			break;
 		}
-
 		case "delete": {
 			const { followee, follower } = change.oldDoc;
-
-			// Decrease follower count
-			const followerProfile = await ctx.db.get(follower);
-			if (followerProfile) {
-				const newFollowerCount = (followerProfile.followerCount ?? 0) + 1;
-				await ctx.db.patch(follower, { followerCount: newFollowerCount });
-			}
-
-			// Decrease following count
+			// Decrease followee's follower count
 			const followeeProfile = await ctx.db.get(followee);
 			if (followeeProfile) {
-				const newFollowerCount = (followeeProfile.followingCount ?? 0) + 1;
-				await ctx.db.patch(follower, { followerCount: newFollowerCount });
+				const newFollowerCount = Math.max(
+					0,
+					(followeeProfile.followerCount ?? 0) - 1,
+				);
+				await ctx.db.patch(followee, { followerCount: newFollowerCount });
 			}
-
+			// Decrease follower's following count
+			const followerProfile = await ctx.db.get(follower);
+			if (followerProfile) {
+				const newFollowingCount = Math.max(
+					0,
+					(followerProfile.followingCount ?? 0) - 1,
+				);
+				await ctx.db.patch(follower, { followingCount: newFollowingCount });
+			}
 			break;
 		}
 	}
@@ -106,7 +99,6 @@ triggers.register("poems", async (ctx, change) => {
 				const newPostCount = (author.postCount ?? 0) + 1;
 				await ctx.db.patch(authorId, { postCount: newPostCount });
 			}
-
 			break;
 		}
 		case "delete": {
@@ -116,8 +108,40 @@ triggers.register("poems", async (ctx, change) => {
 				const newPostCount = Math.max(0, (author.postCount ?? 0) - 1);
 				await ctx.db.patch(authorId, { postCount: newPostCount });
 			}
-
 			break;
+		}
+	}
+});
+
+triggers.register("poems", async (ctx, change) => {
+	if (change.operation === "delete") {
+		const { _id: poemId } = change.oldDoc;
+
+		const comments = await ctx.db
+			.query("comments")
+			.filter((q) => q.eq(q.field("poemId"), poemId))
+			.collect();
+
+		for (const comment of comments) {
+			await ctx.db.delete(comment._id);
+		}
+
+		const likes = await ctx.db
+			.query("likes")
+			.filter((q) => q.eq(q.field("poemId"), poemId))
+			.collect();
+
+		for (const like of likes) {
+			await ctx.db.delete(like._id);
+		}
+
+		const bookmarks = await ctx.db
+			.query("bookmarks")
+			.filter((q) => q.eq(q.field("poemId"), poemId))
+			.collect();
+
+		for (const bookmark of bookmarks) {
+			await ctx.db.delete(bookmark._id);
 		}
 	}
 });

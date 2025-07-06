@@ -1,11 +1,18 @@
+"use client";
+
 import BackNav from "@/components/blocks/BackNav";
-import Feed from "@/components/home/Feed";
+import PostsFeed from "@/components/feeds/PostsFeed";
+import { useUserStore } from "@/store/userStore";
 
 export default function Posts() {
+	const user = useUserStore((state) => state.user);
+
+	if (!user) return null;
+
 	return (
 		<>
 			<BackNav title="Posts" />
-			<Feed />
+			<PostsFeed authorId={user._id} />
 		</>
 	);
 }

@@ -1,9 +1,10 @@
 import { v } from "convex/values";
-import { mutation, query } from "./_generated/server";
+import { query } from "./_generated/server";
 import { paginationOptsValidator } from "convex/server";
+import { mutation } from "./functions";
 
 export const readAPoem = query({
-	args: { poemId: v.id("poems") },
+	args: { poemId: v.id("poems"), userId: v.optional(v.id("users")) },
 	handler: async (ctx, args) => {
 		const poem = await ctx.db.get(args.poemId);
 
@@ -16,24 +17,75 @@ export const readAPoem = query({
 			return null;
 		}
 
-		return { ...poem, author };
+		let isBookmarked = false;
+		let isLiked = false;
+
+		if (args.userId) {
+			const [bookmark, like] = await Promise.all([
+				ctx.db
+					.query("bookmarks")
+					.withIndex("by_author_poem", (q) =>
+						q.eq("authorId", args.userId!).eq("poemId", poem._id),
+					)
+					.first(),
+				ctx.db
+					.query("likes")
+					.withIndex("by_author_poem", (q) =>
+						q.eq("authorId", args.userId!).eq("poemId", poem._id),
+					)
+					.first(),
+			]);
+
+			isBookmarked = !!bookmark;
+			isLiked = !!like;
+		}
+
+		return { ...poem, author, isBookmarked, isLiked };
 	},
 });
 
 export const readPoems = query({
-	args: { paginationOpts: paginationOptsValidator },
+	args: {
+		paginationOpts: paginationOptsValidator,
+		userId: v.optional(v.id("users")),
+	},
 	handler: async (ctx, args) => {
 		const paginatedPoems = await ctx.db
 			.query("poems")
 			.order("desc")
 			.paginate(args.paginationOpts);
 
+		let userBookmarks = new Set();
+		let userLikes = new Set();
+
+		if (args.userId) {
+			const [bookmarks, likes] = await Promise.all([
+				ctx.db
+					.query("bookmarks")
+					.withIndex("by_author", (q) => q.eq("authorId", args.userId!))
+					.collect(),
+				ctx.db
+					.query("likes")
+					.withIndex("by_author", (q) => q.eq("authorId", args.userId!))
+					.collect(),
+			]);
+
+			userBookmarks = new Set(bookmarks.map((b) => b.poemId));
+			userLikes = new Set(likes.map((l) => l.poemId));
+		}
+
 		const poemsWithAuthors = await Promise.all(
 			paginatedPoems.page.map(async (poem) => {
 				const author = await ctx.db.get(poem.authorId);
+
+				const isBookmarked = userBookmarks.has(poem._id);
+				const isLiked = userLikes.has(poem._id);
+
 				return {
 					...poem,
 					author: author || null,
+					isBookmarked,
+					isLiked,
 				};
 			}),
 		);
@@ -46,13 +98,58 @@ export const readPoems = query({
 });
 
 export const readPoemsByAuthor = query({
-	args: { paginationOpts: paginationOptsValidator, authorId: v.id("users") },
-	handler: async (ctx, args) =>
-		await ctx.db
+	args: {
+		paginationOpts: paginationOptsValidator,
+		authorId: v.id("users"),
+		userId: v.optional(v.id("users")),
+	},
+	handler: async (ctx, args) => {
+		const paginatedPoems = await ctx.db
 			.query("poems")
 			.withIndex("by_author", (q) => q.eq("authorId", args.authorId))
 			.order("desc")
-			.paginate(args.paginationOpts),
+			.paginate(args.paginationOpts);
+
+		let userBookmarks = new Set();
+		let userLikes = new Set();
+
+		if (args.userId) {
+			const [bookmarks, likes] = await Promise.all([
+				ctx.db
+					.query("bookmarks")
+					.withIndex("by_author", (q) => q.eq("authorId", args.userId!))
+					.collect(),
+				ctx.db
+					.query("likes")
+					.withIndex("by_author", (q) => q.eq("authorId", args.userId!))
+					.collect(),
+			]);
+
+			userBookmarks = new Set(bookmarks.map((b) => b.poemId));
+			userLikes = new Set(likes.map((l) => l.poemId));
+		}
+
+		const poemsWithAuthors = await Promise.all(
+			paginatedPoems.page.map(async (poem) => {
+				const author = await ctx.db.get(poem.authorId);
+
+				const isBookmarked = userBookmarks.has(poem._id);
+				const isLiked = userLikes.has(poem._id);
+
+				return {
+					...poem,
+					author: author || null,
+					isBookmarked,
+					isLiked,
+				};
+			}),
+		);
+
+		return {
+			...paginatedPoems,
+			page: poemsWithAuthors,
+		};
+	},
 });
 
 export const writePoem = mutation({
@@ -66,4 +163,9 @@ export const writePoem = mutation({
 			commentCount: 0,
 			isDraft: false,
 		}),
+});
+
+export const deletePoem = mutation({
+	args: { poemId: v.id("poems") },
+	handler: async (ctx, args) => await ctx.db.delete(args.poemId),
 });

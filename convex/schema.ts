@@ -16,7 +16,9 @@ export default defineSchema({
 	bookmarks: defineTable({
 		poemId: v.id("poems"),
 		authorId: v.id("users"),
-	}).index("by_author", ["authorId"]),
+	})
+		.index("by_author", ["authorId"])
+		.index("by_author_poem", ["authorId", "poemId"]),
 
 	users: defineTable({
 		email: v.string(),
@@ -44,5 +46,7 @@ export default defineSchema({
 	likes: defineTable({
 		poemId: v.id("poems"),
 		authorId: v.id("users"),
-	}).index("by_poem", ["poemId"]),
+	})
+		.index("by_author", ["authorId"])
+		.index("by_author_poem", ["authorId", "poemId"]),
 });

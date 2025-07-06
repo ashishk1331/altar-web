@@ -1,51 +1,83 @@
 import { Bookmark, BookmarkCheck, Heart, MessageSquare } from "lucide-react";
 import { twJoin } from "tailwind-merge";
-import { iconSize } from "@/constants/tokens";
+import { iconSize, debounceDelay } from "@/constants/tokens";
 import Button from "../ui/Button";
 import { P } from "../ui/Heading";
 import { XStack } from "../ui/Stack";
-import AFallback from "../blocks/AFallback";
-import { Id } from "@/convex/_generated/dataModel";
+import AFallback, { useUserContext } from "../blocks/AFallback";
+import { useState } from "react";
+import { useDebouncedCallback } from "use-debounce";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { callToast } from "../ui/Toast";
+import { PoemWithAuthor } from "@/types/ComplexTypes";
 
 type IconsTrayProps = {
-	likeCount: number;
-	commentCount: number;
-	poemId: Id<"poems">;
+	poem: PoemWithAuthor;
 };
 
-export default function IconsTray({
-	likeCount,
-	commentCount,
-	poemId,
-}: IconsTrayProps) {
-	const isAlreadyBookmarked = false;
-	const isAlreadyLiked = false;
+export default function IconsTray({ poem }: IconsTrayProps) {
+	const {
+		user: { _id: userId },
+	} = useUserContext();
+	const {
+		isBookmarked: isAlreadyBookmarked,
+		isLiked: isAlreadyLiked,
+		_id: poemId,
+		likeCount,
+		commentCount,
+	} = poem;
+
+	const addBookmark = useMutation(api.bookmarks.addBookmark);
+	const removeBookmark = useMutation(api.bookmarks.removeBookmark);
+	const [isBookmarked, setIsBookmarked] = useState(isAlreadyBookmarked);
+	const handleBookmarkChange = useDebouncedCallback(async () => {
+		if (isBookmarked) {
+			await removeBookmark({ authorId: userId, poemId });
+			callToast.success("Removed from bookmarks.");
+		} else {
+			await addBookmark({ authorId: userId, poemId });
+			callToast.success("Added to bookmarks.");
+		}
+		setIsBookmarked(!isBookmarked);
+	}, debounceDelay);
+
+	const likePoem = useMutation(api.likes.likePoem);
+	const dislikePoem = useMutation(api.likes.dislikePoem);
+	const [isLiked, setIsLiked] = useState(isAlreadyLiked);
+	const handleLikeDislike = useDebouncedCallback(async () => {
+		if (isLiked) {
+			await dislikePoem({ authorId: userId, poemId });
+		} else {
+			await likePoem({ authorId: userId, poemId });
+		}
+		setIsLiked(!isLiked);
+	}, debounceDelay);
 
 	return (
 		<XStack className="w-full">
 			<Button
 				variant="outline"
-				className={twJoin(isAlreadyBookmarked && "hover:bg-red-50")}
+				onClick={handleLikeDislike}
+				className={twJoin(isLiked && "hover:bg-red-50")}
 			>
 				<Heart
 					size={iconSize}
-					className={isAlreadyLiked ? "fill-red-500 text-red-500" : ""}
+					className={isLiked ? "fill-red-500 text-red-500" : ""}
 				/>
 				{likeCount > 0 && <P>{likeCount}</P>}
 			</Button>
-			<Button variant="outline">
+			<XStack className="px-2">
 				<MessageSquare size={iconSize} />
 				{commentCount > 0 && <P>{commentCount}</P>}
-			</Button>
+			</XStack>
 			<AFallback>
 				<Button
 					variant="icon"
-					className={twJoin(
-						"ml-auto",
-						isAlreadyBookmarked && "hover:bg-indigo-50",
-					)}
+					onClick={handleBookmarkChange}
+					className={twJoin("ml-auto", isBookmarked && "hover:bg-indigo-50")}
 				>
-					{isAlreadyBookmarked ? (
+					{isBookmarked ? (
 						<BookmarkCheck size={iconSize} className="text-indigo-500" />
 					) : (
 						<Bookmark size={iconSize} className="text-black" />

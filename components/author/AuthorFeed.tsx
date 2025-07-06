@@ -8,15 +8,17 @@ import FeedSkeleton from "../home/FeedSkeleton";
 import Button from "../ui/Button";
 import AFallback from "../blocks/AFallback";
 import { Id } from "@/convex/_generated/dataModel";
+import { useUserStore } from "@/store/userStore";
 
 type AuthorFeedProps = {
 	authorId: Id<"users">;
 };
 
 export default function AuthorFeed({ authorId }: AuthorFeedProps) {
+	const user = useUserStore((state) => state.user);
 	const { results, isLoading, status, loadMore } = usePaginatedQuery(
 		api.poems.readPoemsByAuthor,
-		{ authorId },
+		{ authorId, userId: user?._id },
 		{ initialNumItems },
 	);
 

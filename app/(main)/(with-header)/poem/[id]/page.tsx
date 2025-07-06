@@ -18,7 +18,7 @@ type PoemPageProps = {
 export default function PoemPage({ params }: PoemPageProps) {
 	const { id: poemId } = use(params);
 	const user = useUserStore((state) => state.user);
-	const poem = useQuery(api.poems.readAPoem, { poemId });
+	const poem = useQuery(api.poems.readAPoem, { poemId, userId: user?._id });
 	const comments = useQuery(api.comments.readCommentsOfPoem, { poemId });
 
 	if (!poem || !comments || !user) return null;
@@ -30,7 +30,7 @@ export default function PoemPage({ params }: PoemPageProps) {
 			<AFallback>
 				<CommentForm author={user} poem={poem} />
 			</AFallback>
-			<Forum poemId={poem._id} authorId={user._id} comments={comments} />
+			<Forum comments={comments} />
 		</>
 	);
 }
