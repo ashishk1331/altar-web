@@ -14,8 +14,8 @@ export default function Front({ poem }: FrontProps) {
 		<YStack className="items-start my-8 gap-8">
 			<H3>{title}</H3>
 			<YStack className="w-full items-start gap-1">
-				{lines.map((line) => (
-					<P key={line}>{line}</P>
+				{lines.map((line, index) => (
+					<P key={index + ""}>{line}</P>
 				))}
 			</YStack>
 		</YStack>

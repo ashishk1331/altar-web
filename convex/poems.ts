@@ -52,6 +52,7 @@ export const readPoems = query({
 	handler: async (ctx, args) => {
 		const paginatedPoems = await ctx.db
 			.query("poems")
+			.filter((q) => q.eq(q.field("isDraft"), false))
 			.order("desc")
 			.paginate(args.paginationOpts);
 
@@ -107,6 +108,7 @@ export const readPoemsByAuthor = query({
 		const paginatedPoems = await ctx.db
 			.query("poems")
 			.withIndex("by_author", (q) => q.eq("authorId", args.authorId))
+			.filter((q) => q.eq(q.field("isDraft"), false))
 			.order("desc")
 			.paginate(args.paginationOpts);
 
@@ -152,17 +154,64 @@ export const readPoemsByAuthor = query({
 	},
 });
 
+export const readDraftPoems = query({
+	args: {
+		paginationOpts: paginationOptsValidator,
+		userId: v.id("users"),
+	},
+	handler: async (ctx, args) => {
+		const paginatedPoems = await ctx.db
+			.query("poems")
+			.withIndex("by_author_and_is_draft", (q) =>
+				q.eq("authorId", args.userId).eq("isDraft", true),
+			)
+			.order("desc")
+			.paginate(args.paginationOpts);
+
+		const poemsWithAuthors = await Promise.all(
+			paginatedPoems.page.map(async (poem) => {
+				const author = await ctx.db.get(poem.authorId);
+				return {
+					...poem,
+					author: author || null,
+				};
+			}),
+		);
+
+		return {
+			...paginatedPoems,
+			page: poemsWithAuthors,
+		};
+	},
+});
+
 export const writePoem = mutation({
-	args: { title: v.string(), body: v.string(), authorId: v.id("users") },
-	handler: async (ctx, args) =>
-		await ctx.db.insert("poems", {
-			title: args.title,
-			body: args.body,
-			authorId: args.authorId,
-			likeCount: 0,
-			commentCount: 0,
-			isDraft: false,
-		}),
+	args: {
+		title: v.string(),
+		body: v.string(),
+		authorId: v.id("users"),
+		isDraft: v.boolean(),
+		poemId: v.optional(v.id("poems")),
+	},
+	handler: async (ctx, args) => {
+		if (args.poemId) {
+			await ctx.db.patch(args.poemId, {
+				title: args.title,
+				body: args.body,
+				isDraft: args.isDraft,
+			});
+			return "Document updated";
+		} else {
+			return await ctx.db.insert("poems", {
+				title: args.title,
+				body: args.body,
+				authorId: args.authorId,
+				likeCount: 0,
+				commentCount: 0,
+				isDraft: args.isDraft,
+			});
+		}
+	},
 });
 
 export const deletePoem = mutation({

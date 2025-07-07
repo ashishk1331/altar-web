@@ -20,7 +20,7 @@ export default function Poem({ poem, showSettings }: PoemProps) {
 				<ProfileRuler
 					author={author}
 					showSettings={showSettings}
-					poemId={poemId}
+					poem={poem}
 				/>
 			)}
 			<Link href={`/poem/${poemId}`}>

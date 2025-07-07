@@ -1,5 +1,6 @@
 "use client";
 
+import Blockade from "@/components/blocks/Blockade";
 import { useUserStore } from "@/store/userStore";
 import { useRouter } from "next/navigation";
 import { PropsWithChildren, useEffect } from "react";
@@ -11,6 +12,8 @@ export default function AuthWrapper({ children }: PropsWithChildren) {
 	useEffect(() => {
 		if (!user) router.replace("signin");
 	}, [router, user]);
+
+	if (!user) return <Blockade />;
 
 	return children;
 }

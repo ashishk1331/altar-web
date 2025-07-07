@@ -32,9 +32,9 @@ export const removeBookmark = mutation({
 });
 
 export const readBookmarkedPoems = query({
-	args: { 
-		paginationOpts: paginationOptsValidator, 
-		userId: v.id("users") 
+	args: {
+		paginationOpts: paginationOptsValidator,
+		userId: v.id("users"),
 	},
 	handler: async (ctx, args) => {
 		const paginatedBookmarks = await ctx.db
@@ -42,33 +42,33 @@ export const readBookmarkedPoems = query({
 			.withIndex("by_author", (q) => q.eq("authorId", args.userId))
 			.order("desc")
 			.paginate(args.paginationOpts);
-		
+
 		const allUserLikes = await ctx.db
 			.query("likes")
 			.withIndex("by_author", (q) => q.eq("authorId", args.userId))
 			.collect();
-		
-		const userLikes = new Set(allUserLikes.map(l => l.poemId));
-		
+
+		const userLikes = new Set(allUserLikes.map((l) => l.poemId));
+
 		const poemsWithAuthors = await Promise.all(
 			paginatedBookmarks.page.map(async (bookmark) => {
 				const poem = await ctx.db.get(bookmark.poemId);
 				if (!poem) return null;
-				
+
 				const author = await ctx.db.get(poem.authorId);
 				const isLiked = userLikes.has(poem._id);
-				
+
 				return {
 					...poem,
 					author: author || null,
 					isBookmarked: true,
 					isLiked,
 				};
-			})
+			}),
 		);
-		
-		const validPoems = poemsWithAuthors.filter(poem => poem !== null);
-		
+
+		const validPoems = poemsWithAuthors.filter((poem) => poem !== null);
+
 		return {
 			...paginatedBookmarks,
 			page: validPoems,

@@ -9,33 +9,42 @@ import {
 	DropdownTrigger,
 	DropdownWrapper,
 } from "../ui/Dropdown";
-import { Ellipsis, Trash } from "lucide-react";
+import { Ellipsis, PencilLine, Trash } from "lucide-react";
 import Button from "../ui/Button";
 import { iconSize } from "@/constants/tokens";
 import { useAction } from "@/hooks/useAction";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { callToast } from "../ui/Toast";
+import { useEditStore } from "@/store/editStore";
+import { useRouter } from "next/navigation";
 
 type ProfileRulerProps = {
 	author: Doc<"users">;
 	showSettings: boolean;
-	poemId: Id<"poems">;
+	poem: Doc<"poems">;
 };
 
 export default function ProfileRuler({
 	author,
 	showSettings,
-	poemId,
+	poem,
 }: ProfileRulerProps) {
+	const router = useRouter();
 	const { picture, name, _creationTime } = author;
 	const deletePoem = useMutation(api.poems.deletePoem);
 	const { loading: isLoading, action: handleDelete } = useAction(
 		async function () {
-			await deletePoem({ poemId });
+			await deletePoem({ poemId: poem._id });
 			callToast.success("Deleted your work.");
 		},
 	);
+	const setDraft = useEditStore(state => state.setDraft)
+
+	function handleEdit() {
+		setDraft(poem);
+		router.push("/write");
+	}
 
 	return (
 		<XStack className="w-full">
@@ -53,7 +62,11 @@ export default function ProfileRuler({
 							<Ellipsis size={16} className="text-black" />
 						</DropdownTrigger>
 						<DropdownContent>
-							<YStack className="p-2 bg-white rounded shadow-md">
+							<YStack className="p-2 bg-white rounded shadow-md items-start *:w-full">
+								<Button variant="outline" onClick={handleEdit}>
+									<PencilLine size={iconSize - 4} />
+									<P>Edit</P>
+								</Button>
 								<Button
 									isLoading={isLoading}
 									disabled={isLoading}

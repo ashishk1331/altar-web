@@ -25,7 +25,7 @@ export default function BackNav({
 			<Button
 				variant="icon"
 				disabled={disableBack}
-				onClick={() => router.back()}
+				onClick={router.back}
 			>
 				<ArrowLeft size={16} className="text-black" />
 			</Button>
