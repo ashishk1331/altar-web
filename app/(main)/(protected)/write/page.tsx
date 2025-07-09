@@ -61,7 +61,6 @@ export default function Write() {
 		<>
 			<BackNav
 				title="Write"
-				disableBack
 				rightExtra={
 					<XStack className="ml-auto gap-4">
 						<Button
