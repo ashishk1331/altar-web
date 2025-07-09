@@ -2,7 +2,7 @@
 
 import { Search } from "lucide-react";
 import BackNav from "@/components/blocks/BackNav";
-import Feed from "@/components/home/Feed";
+// import Feed from "@/components/home/Feed";
 import FiltersForSearch from "@/components/search/FiltersForSearch";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
@@ -20,7 +20,7 @@ export default function SearchPage() {
 					<Search size={iconSize - 4} />
 				</Button>
 			</XStack>
-			<Feed />
+			{/*<Feed />*/}
 		</>
 	);
 }

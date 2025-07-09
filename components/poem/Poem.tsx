@@ -12,17 +12,11 @@ type PoemProps = {
 };
 
 export default function Poem({ poem, showSettings }: PoemProps) {
-	const { title, body, _id: poemId, author } = poem;
+	const { title, body, _id: poemId } = poem;
 
 	return (
 		<YStack className="w-full items-start py-4">
-			{author && (
-				<ProfileRuler
-					author={author}
-					showSettings={showSettings}
-					poem={poem}
-				/>
-			)}
+			<ProfileRuler showSettings={showSettings} poem={poem} />
 			<Link href={`/poem/${poemId}`}>
 				<YStack className="items-start my-4">
 					<H3>{title}</H3>

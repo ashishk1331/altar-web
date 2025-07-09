@@ -12,7 +12,7 @@ type PoemProps = {
 
 export default function Draft({ poem }: PoemProps) {
 	const router = useRouter();
-	const { title, body, author } = poem;
+	const { title, body } = poem;
 	const setDraft = useEditStore((state) => state.setDraft);
 
 	function handleDraft() {
@@ -22,7 +22,7 @@ export default function Draft({ poem }: PoemProps) {
 
 	return (
 		<YStack className="w-full items-start py-4">
-			{author && <ProfileRuler author={author} showSettings poem={poem} />}
+			<ProfileRuler showSettings poem={poem} />
 			<Button
 				variant="outline"
 				className="w-full hover:bg-white items-start"

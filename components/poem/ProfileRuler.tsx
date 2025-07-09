@@ -2,7 +2,6 @@ import Link from "next/link";
 import Avatar from "../blocks/Avatar";
 import { P } from "../ui/Heading";
 import { XStack, YStack } from "../ui/Stack";
-import { Doc, Id } from "@/convex/_generated/dataModel";
 import { formatDistance } from "date-fns";
 import {
 	DropdownContent,
@@ -18,20 +17,19 @@ import { api } from "@/convex/_generated/api";
 import { callToast } from "../ui/Toast";
 import { useEditStore } from "@/store/editStore";
 import { useRouter } from "next/navigation";
+import { PoemWithAuthor } from "@/types/ComplexTypes";
 
 type ProfileRulerProps = {
-	author: Doc<"users">;
 	showSettings: boolean;
-	poem: Doc<"poems">;
+	poem: PoemWithAuthor;
 };
 
 export default function ProfileRuler({
-	author,
 	showSettings,
 	poem,
 }: ProfileRulerProps) {
 	const router = useRouter();
-	const { picture, name, _creationTime } = author;
+	const { author } = poem;
 	const deletePoem = useMutation(api.poems.deletePoem);
 	const { loading: isLoading, action: handleDelete } = useAction(
 		async function () {
@@ -39,7 +37,7 @@ export default function ProfileRuler({
 			callToast.success("Deleted your work.");
 		},
 	);
-	const setDraft = useEditStore(state => state.setDraft)
+	const setDraft = useEditStore((state) => state.setDraft);
 
 	function handleEdit() {
 		setDraft(poem);
@@ -48,12 +46,17 @@ export default function ProfileRuler({
 
 	return (
 		<XStack className="w-full">
-			<Avatar src={picture} alt="image of user" width={64} variant="md" />
-			<Link href={`/author/${123}`}>
-				<P>{name}</P>
+			<Avatar
+				src={author?.picture ?? ""}
+				alt="image of user"
+				width={64}
+				variant="md"
+			/>
+			<Link href={`/author/${author?._id}`}>
+				<P>{author?.name ?? ""}</P>
 			</Link>
 			<P className="text-neutral-400">
-				{formatDistance(_creationTime, new Date(), { addSuffix: true })}
+				{formatDistance(poem._creationTime, new Date(), { addSuffix: true })}
 			</P>
 			{showSettings && (
 				<XStack className="ml-auto">

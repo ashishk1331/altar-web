@@ -1,6 +1,7 @@
 import { v } from "convex/values";
 import { query } from "./_generated/server";
 import { mutation } from "./functions";
+import { Doc } from "./_generated/dataModel";
 
 export const upsertUser = mutation({
 	args: {
@@ -38,4 +39,23 @@ export const upsertUser = mutation({
 export const readUser = query({
 	args: { authorId: v.id("users") },
 	handler: async (ctx, args) => await ctx.db.get(args.authorId),
+});
+
+export const updateUser = mutation({
+	args: { userId: v.id("users"), firstName: v.optional(v.string()), lastName: v.optional(v.string()), bio: v.optional(v.string()) },
+	handler: async (ctx, args) => {
+		let payload: Partial<Doc<"users">> = {};
+
+		if (args.firstName) {
+			payload["firstName"] = args.firstName;
+		}
+		if (args.lastName) {
+			payload["lastName"] = args.lastName;
+		}
+		if (args.bio) {
+			payload["bio"] = args.bio;
+		}
+
+		await ctx.db.patch(args.userId, payload);
+	},
 });

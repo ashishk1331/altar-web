@@ -55,7 +55,7 @@ export default function Write() {
 			setTitle(draft.title);
 			setBody(draft.body);
 		}
-	}, [draft])
+	}, [draft]);
 
 	return (
 		<>

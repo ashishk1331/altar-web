@@ -22,11 +22,7 @@ export default function BackNav({
 
 	return (
 		<XStack className="sticky top-0 w-full bg-white py-2">
-			<Button
-				variant="icon"
-				disabled={disableBack}
-				onClick={router.back}
-			>
+			<Button variant="icon" disabled={disableBack} onClick={router.back}>
 				<ArrowLeft size={16} className="text-black" />
 			</Button>
 			{title && <P>{title}</P>}

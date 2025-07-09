@@ -9,13 +9,9 @@ type PoemActionProps = {
 };
 
 export default function PoemAction({ poem }: PoemActionProps) {
-	const { author, _id: poemId } = poem;
-
 	return (
 		<YStack className="py-8 gap-4 border-y border-neutral-300">
-			{author && (
-				<ProfileRuler showSettings={false} author={author} poemId={poemId} />
-			)}
+			<ProfileRuler showSettings={false} poem={poem} />
 			<AFallback>
 				<IconsTray poem={poem} />
 			</AFallback>

@@ -60,7 +60,7 @@ export const readBookmarkedPoems = query({
 
 				return {
 					...poem,
-					author: author || null,
+					author,
 					isBookmarked: true,
 					isLiked,
 				};

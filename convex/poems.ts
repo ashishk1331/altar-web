@@ -84,7 +84,7 @@ export const readPoems = query({
 
 				return {
 					...poem,
-					author: author || null,
+					author,
 					isBookmarked,
 					isLiked,
 				};
@@ -140,7 +140,7 @@ export const readPoemsByAuthor = query({
 
 				return {
 					...poem,
-					author: author || null,
+					author,
 					isBookmarked,
 					isLiked,
 				};
@@ -173,7 +173,7 @@ export const readDraftPoems = query({
 				const author = await ctx.db.get(poem.authorId);
 				return {
 					...poem,
-					author: author || null,
+					author,
 				};
 			}),
 		);

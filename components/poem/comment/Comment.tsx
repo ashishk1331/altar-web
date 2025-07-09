@@ -24,13 +24,8 @@ type CommentProps = {
 };
 
 export default function Comment({ isAuthor = false, comment }: CommentProps) {
-	const {
-		_id: commentId,
-		body,
-		author: { name, picture },
-		authorId,
-		_creationTime,
-	} = comment;
+	const { _id: commentId, body, author, authorId, _creationTime } = comment;
+
 	const deleteComment = useMutation(api.comments.deleteComment);
 	const { loading: isLoading, action: handleDelete } = useAction(
 		async function () {
@@ -41,11 +36,16 @@ export default function Comment({ isAuthor = false, comment }: CommentProps) {
 
 	return (
 		<XStack className="w-full gap-4 items-start">
-			<Avatar src={picture} alt="image of user" width={64} variant="md" />
+			<Avatar
+				src={author?.picture ?? ""}
+				alt="image of user"
+				width={64}
+				variant="md"
+			/>
 			<YStack className="w-full items-start">
 				<XStack className="w-full">
 					<Link href={`/author/${authorId}`}>
-						<P>{name}</P>
+						<P>{author?.name ?? ""}</P>
 					</Link>
 					{isAuthor && (
 						<Crown

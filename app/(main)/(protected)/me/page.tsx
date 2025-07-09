@@ -1,6 +1,6 @@
 "use client";
 
-import { LogOut } from "lucide-react";
+import { LogOut, UserRound } from "lucide-react";
 import Link from "next/link";
 import ProfileFront from "@/components/author/ProfileFront";
 import BackNav from "@/components/blocks/BackNav";
@@ -30,6 +30,15 @@ export default function Profile() {
 			<BackNav title="Profile" />
 			<ProfileFront author={user} />
 			<YStack className="items-start gap-2 my-4 *:p-2">
+				<Link
+					href={`/author/${user._id}`}
+					className="w-full hover:bg-neutral-50 rounded"
+				>
+					<XStack>
+						<UserRound size={iconSize - 4} />
+						<P>Profile</P>
+					</XStack>
+				</Link>
 				{navItems.slice(0, -1).map(({ label, href, Icon }) => (
 					<Link
 						key={href}

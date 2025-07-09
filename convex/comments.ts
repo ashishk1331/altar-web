@@ -16,7 +16,7 @@ export const readCommentsOfPoem = query({
 				const author = await ctx.db.get(comment.authorId);
 				return {
 					...comment,
-					author: author || null,
+					author,
 				};
 			}),
 		);
