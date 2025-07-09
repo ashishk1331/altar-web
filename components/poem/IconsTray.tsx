@@ -1,4 +1,10 @@
-import { Bookmark, BookmarkCheck, Heart, MessageSquare } from "lucide-react";
+import {
+	Bookmark,
+	BookmarkCheck,
+	Heart,
+	MessageSquare,
+	Share,
+} from "lucide-react";
 import { twJoin } from "tailwind-merge";
 import { iconSize, debounceDelay } from "@/constants/tokens";
 import Button from "../ui/Button";
@@ -11,6 +17,7 @@ import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { callToast } from "../ui/Toast";
 import { PoemWithAuthor } from "@/types/ComplexTypes";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 type IconsTrayProps = {
 	poem: PoemWithAuthor;
@@ -71,11 +78,19 @@ export default function IconsTray({ poem }: IconsTrayProps) {
 				<MessageSquare size={iconSize} />
 				{commentCount > 0 && <P>{commentCount}</P>}
 			</XStack>
+			<CopyToClipboard
+				text={`Read ${poem.title} by ${poem.author?.name} on https://thealtar.vercel.app/poem/${poem._id}`}
+				onCopy={() => callToast.success("Copied to clipboard.")}
+			>
+				<Button variant="icon" className="ml-auto">
+					<Share size={iconSize} />
+				</Button>
+			</CopyToClipboard>
 			<AFallback>
 				<Button
 					variant="icon"
 					onClick={handleBookmarkChange}
-					className={twJoin("ml-auto", isBookmarked && "hover:bg-indigo-50")}
+					className={twJoin(isBookmarked && "hover:bg-indigo-50")}
 				>
 					{isBookmarked ? (
 						<BookmarkCheck size={iconSize} className="text-indigo-500" />

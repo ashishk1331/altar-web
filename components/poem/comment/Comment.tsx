@@ -17,6 +17,7 @@ import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useAction } from "@/hooks/useAction";
 import { callToast } from "@/components/ui/Toast";
+import defaultAvatar from "@/public/default-avatar.webp";
 
 type CommentProps = {
 	isAuthor: boolean;
@@ -37,7 +38,7 @@ export default function Comment({ isAuthor = false, comment }: CommentProps) {
 	return (
 		<XStack className="w-full gap-4 items-start">
 			<Avatar
-				src={author?.picture ?? ""}
+				src={author?.picture ?? defaultAvatar}
 				alt="image of user"
 				width={64}
 				variant="md"

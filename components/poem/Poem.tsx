@@ -20,7 +20,7 @@ export default function Poem({ poem, showSettings }: PoemProps) {
 			<Link href={`/poem/${poemId}`}>
 				<YStack className="items-start my-4">
 					<H3>{title}</H3>
-					<P>{body.substring(0, 42)}</P>
+					<P>{body.substring(0, 42) + (body.length > 42 ? "..." : "")}</P>
 				</YStack>
 			</Link>
 			<AFallback>
