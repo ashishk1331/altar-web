@@ -10,13 +10,14 @@ import { useState } from "react";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { callToast } from "@/components/ui/Toast";
+import { useUserContext } from "@/components/blocks/AFallback";
 
 type CommentFormProps = {
-	author: Doc<"users">;
 	poem: Doc<"poems">;
 };
 
-export default function CommentForm({ author, poem }: CommentFormProps) {
+export default function CommentForm({ poem }: CommentFormProps) {
+	const { user: author } = useUserContext();
 	const [body, setBody] = useState("");
 	const writeComment = useMutation(api.comments.writeComment);
 	const { picture, _id: authorId, name } = author;

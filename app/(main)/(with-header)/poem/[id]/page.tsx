@@ -1,6 +1,7 @@
 "use client";
 
 import AFallback from "@/components/blocks/AFallback";
+import SimpleFooter from "@/components/blocks/SimpleFooter";
 import CommentForm from "@/components/poem/comment/CommentForm";
 import Forum from "@/components/poem/comment/Forum";
 import Front from "@/components/poem/Front";
@@ -21,14 +22,14 @@ export default function PoemPage({ params }: PoemPageProps) {
 	const poem = useQuery(api.poems.readAPoem, { poemId, userId: user?._id });
 	const comments = useQuery(api.comments.readCommentsOfPoem, { poemId });
 
-	if (!poem || !comments || !user) return null;
+	if (!poem || !comments) return null;
 
 	return (
 		<>
 			<Front poem={poem} />
 			<PoemAction poem={poem} />
 			<AFallback>
-				<CommentForm author={user} poem={poem} />
+				<CommentForm poem={poem} />
 			</AFallback>
 			<Forum comments={comments} />
 		</>

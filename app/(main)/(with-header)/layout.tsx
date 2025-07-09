@@ -3,6 +3,7 @@ import Header from "@/components/blocks/Header";
 import WriteButton from "@/components/blocks/WriteButton";
 import AFallback from "@/components/blocks/AFallback";
 import SigninBanner from "@/components/blocks/SigninBanner";
+import SimpleFooter from "@/components/blocks/SimpleFooter";
 
 export default function InnerLayout({ children }: PropsWithChildren) {
 	return (
@@ -12,6 +13,7 @@ export default function InnerLayout({ children }: PropsWithChildren) {
 			<AFallback fallback={<SigninBanner />}>
 				<WriteButton />
 			</AFallback>
+			<SimpleFooter />
 		</>
 	);
 }
