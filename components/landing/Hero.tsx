@@ -38,12 +38,12 @@ export default function Hero() {
 			<YStack className="my-12 justify-center">
 				<H1>Join the safe place</H1>
 				<H3>for your writing rituals.</H3>
-				<div className="mt-4">
+				<div className="my-8">
 					<GoogleLogin onSuccess={handleSuccess} onError={handleError} />
 				</div>
 			</YStack>
 			<Image
-				src="/people.webp"
+				src="/people.jpg"
 				width={1024}
 				height={720}
 				alt="Banner image."

@@ -1,7 +1,6 @@
 "use client";
 
 import AFallback from "@/components/blocks/AFallback";
-import SimpleFooter from "@/components/blocks/SimpleFooter";
 import CommentForm from "@/components/poem/comment/CommentForm";
 import Forum from "@/components/poem/comment/Forum";
 import Front from "@/components/poem/Front";

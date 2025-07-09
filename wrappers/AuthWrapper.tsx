@@ -10,7 +10,7 @@ export default function AuthWrapper({ children }: PropsWithChildren) {
 	const user = useUserStore((state) => state.user);
 
 	useEffect(() => {
-		if (!user) router.replace("signin");
+		if (!user) router.replace("/");
 	}, [router, user]);
 
 	if (!user) return <Blockade />;
