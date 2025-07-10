@@ -1,5 +1,5 @@
 import { LoaderCircle } from "lucide-react";
-import type { ButtonHTMLAttributes } from "react";
+import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { twJoin, twMerge } from "tailwind-merge";
 import { iconSize } from "@/constants/tokens";
 

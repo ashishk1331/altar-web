@@ -11,7 +11,9 @@ export type UserStoreState = {
 
 type UserStoreActions = {
 	setUser: (user: User) => void;
-	updateUser: (partialUser: Partial<Pick<User, "firstName" | "lastName" | "bio">>) => void;
+	updateUser: (
+		partialUser: Partial<Pick<User, "firstName" | "lastName" | "bio">>,
+	) => void;
 	resetUser: () => void;
 	setLastLoggedIn: (jsonDate: number) => void;
 };
@@ -24,7 +26,7 @@ export const useUserStore = create<UserStoreState & UserStoreActions>()(
 				return set({ user });
 			},
 			updateUser(partialUser) {
-				return set(state => ({
+				return set((state) => ({
 					user: state.user ? { ...state.user, ...partialUser } : null,
 				}));
 			},

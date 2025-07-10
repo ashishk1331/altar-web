@@ -5,6 +5,7 @@ import { api } from "@/convex/_generated/api";
 import FeedSkeleton from "../home/FeedSkeleton";
 import { initialNumItems } from "@/constants/tokens";
 import Button from "../ui/Button";
+import EmptyFeed from "../poem/EmptyFeed";
 
 type PostsFeedProps = {
 	authorId: Id<"users">;
@@ -18,6 +19,8 @@ export default function PostsFeed({ authorId }: PostsFeedProps) {
 	);
 
 	if (isLoading) return <FeedSkeleton />;
+
+	if (results.length === 0) return <EmptyFeed />;
 
 	return (
 		<>

@@ -11,6 +11,8 @@ import { useShallow } from "zustand/shallow";
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { decodeJWT, subsetUser } from "@/utils/auth";
 import { callToast } from "../ui/Toast";
+import AFallback from "../blocks/AFallback";
+import Button from "../ui/Button";
 
 export default function Hero() {
 	const router = useRouter();
@@ -39,7 +41,13 @@ export default function Hero() {
 				<H1>Join the safe place</H1>
 				<H3>for your writing rituals.</H3>
 				<div className="my-8">
-					<GoogleLogin onSuccess={handleSuccess} onError={handleError} />
+					<AFallback
+						fallback={
+							<GoogleLogin onSuccess={handleSuccess} onError={handleError} />
+						}
+					>
+						<Button onClick={() => router.push("/home")}>Jump to home</Button>
+					</AFallback>
 				</div>
 			</YStack>
 			<Image

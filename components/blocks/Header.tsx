@@ -7,6 +7,7 @@ import { iconSize } from "@/constants/tokens";
 import Button from "../ui/Button";
 import {
 	DropdownContent,
+	DropdownItem,
 	DropdownTrigger,
 	DropdownWrapper,
 } from "../ui/Dropdown";
@@ -15,6 +16,7 @@ import { XStack, YStack } from "../ui/Stack";
 import Avatar from "./Avatar";
 import { useUserStore } from "@/store/userStore";
 import AFallback from "./AFallback";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
 	return (
@@ -43,6 +45,7 @@ export default function Header() {
 
 function AvatarWithDropdown() {
 	const user = useUserStore((state) => state.user);
+	const router = useRouter();
 
 	return (
 		<DropdownWrapper>
@@ -56,19 +59,21 @@ function AvatarWithDropdown() {
 			</DropdownTrigger>
 			<DropdownContent>
 				<YStack className="p-2 bg-white rounded shadow-xl items-start gap-0 *:w-full">
-					<Link href={`/author/${user?._id || ""}`} className="w-full">
-						<Button variant="outline" className="w-full hover:bg-neutral-50">
-							<UserRound size={iconSize - 4} />
-							<P>Profile</P>
-						</Button>
-					</Link>
+					<DropdownItem
+						onClick={() => router.push(`/author/${user?._id || ""}`)}
+						className="w-full hover:bg-neutral-50"
+					>
+						<UserRound size={iconSize - 4} />
+						<P>Profile</P>
+					</DropdownItem>
 					{navItems.slice(1).map(({ label, Icon, href }) => (
-						<Link key={href} href={href} className="w-full">
-							<Button variant="outline" className="w-full hover:bg-neutral-50">
-								<Icon size={iconSize - 4} />
-								<P>{label}</P>
-							</Button>
-						</Link>
+						<DropdownItem
+							key={href}
+							onClick={() => router.push(href)}
+						>
+							<Icon size={iconSize - 4} />
+							<P>{label}</P>
+						</DropdownItem>
 					))}
 				</YStack>
 			</DropdownContent>

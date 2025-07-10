@@ -9,6 +9,7 @@ import Button from "../ui/Button";
 import AFallback from "../blocks/AFallback";
 import { Id } from "@/convex/_generated/dataModel";
 import { useUserStore } from "@/store/userStore";
+import EmptyFeed from "../poem/EmptyFeed";
 
 type AuthorFeedProps = {
 	authorId: Id<"users">;
@@ -23,6 +24,9 @@ export default function AuthorFeed({ authorId }: AuthorFeedProps) {
 	);
 
 	if (isLoading) return <FeedSkeleton />;
+
+	if (results.length === 0)
+		return <EmptyFeed message="Written no poems yet." />;
 
 	return (
 		<>

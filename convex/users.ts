@@ -37,12 +37,41 @@ export const upsertUser = mutation({
 });
 
 export const readUser = query({
-	args: { authorId: v.id("users") },
-	handler: async (ctx, args) => await ctx.db.get(args.authorId),
+	args: { authorId: v.id("users"), userId: v.optional(v.id("users")) },
+	handler: async (ctx, args) => {
+		const author = await ctx.db.get(args.authorId);
+
+		if (!author) {
+			return null;
+		}
+
+		let isFollowing = false;
+		if (args.userId) {
+			const record = await ctx.db
+				.query("followers")
+				.filter((q) =>
+					q.and(
+						q.eq(q.field("followee"), args.authorId),
+						q.eq(q.field("follower"), args.userId),
+					),
+				)
+				.first();
+			if (record) {
+				isFollowing = true;
+			}
+		}
+
+		return { ...author, isFollowing };
+	},
 });
 
 export const updateUser = mutation({
-	args: { userId: v.id("users"), firstName: v.optional(v.string()), lastName: v.optional(v.string()), bio: v.optional(v.string()) },
+	args: {
+		userId: v.id("users"),
+		firstName: v.optional(v.string()),
+		lastName: v.optional(v.string()),
+		bio: v.optional(v.string()),
+	},
 	handler: async (ctx, args) => {
 		let payload: Partial<Doc<"users">> = {};
 

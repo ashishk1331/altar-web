@@ -12,6 +12,7 @@ import {
 	useState,
 } from "react";
 import { twMerge } from "tailwind-merge";
+import Button from "./Button";
 
 type DropdownContextType = {
 	isDropdownOpen: boolean;
@@ -98,5 +99,30 @@ export function DropdownContent({
 		>
 			{children}
 		</div>
+	);
+}
+
+export function DropdownItem({
+	children,
+	onClick,
+	className: passedOnClassName,
+	...props
+}: PropsWithChildren & React.ButtonHTMLAttributes<HTMLButtonElement>) {
+	const { setIsDropdownOpen } = useDropdownContext();
+
+	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+		onClick?.(event);
+		setIsDropdownOpen(false);
+	};
+
+	return (
+		<Button
+			variant="outline"
+			onClick={handleClick}
+			className={twMerge(passedOnClassName, "hover:bg-neutral-50")}
+			{...props}
+		>
+			{children}
+		</Button>
 	);
 }

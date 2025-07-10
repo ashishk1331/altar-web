@@ -35,7 +35,9 @@ export default defineSchema({
 	followers: defineTable({
 		followee: v.id("users"),
 		follower: v.id("users"),
-	}).index("by_followee", ["followee"]),
+	})
+		.index("by_followee", ["followee"])
+		.index("by_follower", ["follower"]),
 
 	comments: defineTable({
 		poemId: v.id("poems"),
