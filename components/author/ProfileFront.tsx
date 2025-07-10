@@ -4,7 +4,7 @@ import { P } from "../ui/Heading";
 import { XStack, YStack } from "../ui/Stack";
 
 type ProfileFrontProps = {
-	author: Doc<"users"> & { isFollowing: boolean };
+	author: Doc<"users">;
 };
 
 export default function ProfileFront({ author }: ProfileFrontProps) {
