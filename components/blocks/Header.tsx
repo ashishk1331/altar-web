@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, Search, UserRound } from "lucide-react";
+import { ArrowLeft, Bell, Search, UserRound } from "lucide-react";
 import Link from "next/link";
 import { navItems } from "@/constants/NavItems";
 import { iconSize } from "@/constants/tokens";
@@ -16,24 +16,33 @@ import { XStack, YStack } from "../ui/Stack";
 import Avatar from "./Avatar";
 import { useUserStore } from "@/store/userStore";
 import AFallback from "./AFallback";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function Header() {
+	const router = useRouter();
+	const pathname = usePathname();
+	const isAtHome = pathname.split("/")[1] === "home";
+
 	return (
 		<header className="sticky top-0 flex items-center gap-4 w-full justify-between py-4 bg-white">
-			<Link href="/home">
-				<H3>Altar</H3>
-			</Link>
+			<XStack>
+				{!isAtHome && <Button variant="icon" onClick={router.back}>
+					<ArrowLeft size={iconSize} />
+				</Button>}
+				<Link href="/home">
+					<H3>Altar</H3>
+				</Link>
+			</XStack>
 			<AFallback fallback={<div />}>
 				<XStack>
 					<Link href="/notifications">
 						<Button variant="icon">
-							<Bell size={16} className="text-black" />
+							<Bell size={iconSize} className="text-black" />
 						</Button>
 					</Link>
 					<Link href="/search">
 						<Button variant="icon">
-							<Search size={16} className="text-black" />
+							<Search size={iconSize} className="text-black" />
 						</Button>
 					</Link>
 					<AvatarWithDropdown />

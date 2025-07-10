@@ -1,4 +1,4 @@
-export const iconSize = 20;
+export const iconSize = 16;
 
 export const initialNumItems = 10;
 
