@@ -26,9 +26,11 @@ export default function Header() {
 	return (
 		<header className="sticky top-0 flex items-center gap-4 w-full justify-between py-4 bg-white">
 			<XStack>
-				{!isAtHome && <Button variant="icon" onClick={router.back}>
-					<ArrowLeft size={iconSize} />
-				</Button>}
+				{!isAtHome && (
+					<Button variant="icon" onClick={router.back}>
+						<ArrowLeft size={iconSize} />
+					</Button>
+				)}
 				<Link href="/home">
 					<H3>Altar</H3>
 				</Link>
@@ -72,15 +74,12 @@ function AvatarWithDropdown() {
 						onClick={() => router.push(`/author/${user?._id || ""}`)}
 						className="w-full hover:bg-neutral-50"
 					>
-						<UserRound size={iconSize - 4} />
+						<UserRound size={iconSize} />
 						<P>Profile</P>
 					</DropdownItem>
 					{navItems.slice(1).map(({ label, Icon, href }) => (
-						<DropdownItem
-							key={href}
-							onClick={() => router.push(href)}
-						>
-							<Icon size={iconSize - 4} />
+						<DropdownItem key={href} onClick={() => router.push(href)}>
+							<Icon size={iconSize} />
 							<P>{label}</P>
 						</DropdownItem>
 					))}

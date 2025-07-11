@@ -28,7 +28,7 @@ export default function Input({
 			<input
 				id={inputId}
 				className={twMerge(
-					"bg-neutral-100 rounded p-2 px-4 placeholder:text-neutral-400 outline-neutral-100 min-w-3xs",
+					"bg-white border border-neutral-200 rounded p-2 px-4 placeholder:text-neutral-400 outline-neutral-100 min-w-3xs",
 					passedOnClassName,
 				)}
 				{...rest}

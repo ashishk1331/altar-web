@@ -50,7 +50,7 @@ export default function Comment({ isAuthor = false, comment }: CommentProps) {
 					</Link>
 					{isAuthor && (
 						<Crown
-							size={iconSize - 4}
+							size={iconSize}
 							className="stroke-transparent fill-indigo-500"
 						/>
 					)}
@@ -73,7 +73,7 @@ export default function Comment({ isAuthor = false, comment }: CommentProps) {
 												variant="outline"
 												className="text-red-500 hover:bg-red-50"
 											>
-												<Trash size={iconSize - 4} />
+												<Trash size={iconSize} />
 												<P>Delete</P>
 											</Button>
 										</YStack>

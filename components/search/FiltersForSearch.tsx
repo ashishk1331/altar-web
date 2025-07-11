@@ -37,7 +37,7 @@ export default function FiltersForSearch() {
 		<DropdownWrapper>
 			<DropdownTrigger>
 				<Button variant="icon" className="relative">
-					<Funnel size={iconSize - 4} />
+					<Funnel size={iconSize} />
 					<div className="absolute top-0 right-0 w-2 h-2 -translate-x-full translate-y-full aspect-sqaure bg-indigo-500 rounded-full" />
 				</Button>
 			</DropdownTrigger>
@@ -55,7 +55,7 @@ export default function FiltersForSearch() {
 							}
 						>
 							<Check
-								size={iconSize - 4}
+								size={iconSize}
 								className={filter === defaultFilter ? "visible" : "invisible"}
 							/>
 							<P>{label}</P>

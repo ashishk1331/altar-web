@@ -23,7 +23,7 @@ export default function Button({
 }: ButtonProps) {
 	const variants: VariantDict = {
 		primary: "bg-indigo-600 text-white hover:bg-indigo-500",
-		outline: "text-black hover:bg-neutral-100",
+		outline: "text-black hover:bg-neutral-50",
 		icon: "text-black hover:bg-neutral-100 aspect-square",
 	};
 

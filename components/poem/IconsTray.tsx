@@ -69,13 +69,13 @@ export default function IconsTray({ poem }: IconsTrayProps) {
 				className={twJoin(isLiked && "hover:bg-red-50")}
 			>
 				<Heart
-					size={iconSize - 4}
+					size={iconSize}
 					className={isLiked ? "fill-red-500 text-red-500" : ""}
 				/>
 				{likeCount > 0 && <P>{likeCount}</P>}
 			</Button>
 			<XStack className="px-2">
-				<MessageSquare size={iconSize - 4} />
+				<MessageSquare size={iconSize} />
 				{commentCount > 0 && <P>{commentCount}</P>}
 			</XStack>
 			<CopyToClipboard
@@ -83,7 +83,7 @@ export default function IconsTray({ poem }: IconsTrayProps) {
 				onCopy={() => callToast.success("Copied to clipboard.")}
 			>
 				<Button variant="icon" className="ml-auto">
-					<Share size={iconSize - 4} />
+					<Share size={iconSize} />
 				</Button>
 			</CopyToClipboard>
 			<AFallback>
@@ -93,9 +93,9 @@ export default function IconsTray({ poem }: IconsTrayProps) {
 					className={twJoin(isBookmarked && "hover:bg-indigo-50")}
 				>
 					{isBookmarked ? (
-						<BookmarkCheck size={iconSize - 4} className="text-indigo-500" />
+						<BookmarkCheck size={iconSize} className="text-indigo-500" />
 					) : (
-						<Bookmark size={iconSize - 4} className="text-black" />
+						<Bookmark size={iconSize} className="text-black" />
 					)}
 				</Button>
 			</AFallback>

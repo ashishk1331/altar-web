@@ -30,7 +30,7 @@ export default function Loader({
 				passedOnClassName,
 			)}
 		>
-			<LoaderCircle size={iconSize - 4} className="animate-spin" />
+			<LoaderCircle size={iconSize} className="animate-spin" />
 			{message && <P>{message}</P>}
 		</YStack>
 	);

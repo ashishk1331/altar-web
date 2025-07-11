@@ -17,7 +17,7 @@ export default function SearchPage() {
 				<FiltersForSearch />
 				<Input className="w-full" placeholder="search here..." />
 				<Button variant="icon">
-					<Search size={iconSize - 4} />
+					<Search size={iconSize} />
 				</Button>
 			</XStack>
 			{/*<Feed />*/}

@@ -51,4 +51,10 @@ export default defineSchema({
 	})
 		.index("by_author", ["authorId"])
 		.index("by_author_poem", ["authorId", "poemId"]),
+
+	issues: defineTable({
+		issue: v.string(),
+		authorId: v.id("users"),
+		status: v.union(v.literal("in_review"), v.literal("solved")),
+	}).index("by_author", ["authorId"]),
 });

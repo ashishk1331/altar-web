@@ -59,7 +59,7 @@ export default function Meta({ author }: MetaProps) {
 					onCopy={() => callToast.success("Copied to clipboard.")}
 				>
 					<Button variant="icon">
-						<Share size={iconSize - 4} />
+						<Share size={iconSize} />
 					</Button>
 				</CopyToClipboard>
 				<AFallback>
@@ -74,7 +74,7 @@ export default function Meta({ author }: MetaProps) {
 									: ""
 							}
 						>
-							{isAlreadyFollowed && <UserRoundCheck size={iconSize - 4} />}
+							{isAlreadyFollowed && <UserRoundCheck size={iconSize} />}
 							<span>{isAlreadyFollowed ? "Followed" : "Follow"}</span>
 						</Button>
 					)}

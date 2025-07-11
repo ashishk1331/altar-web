@@ -8,7 +8,7 @@ export default function WriteButton() {
 	return (
 		<Link href="/write">
 			<Button className="fixed bottom-0 right-0 m-4 px-6 py-3">
-				<PencilLine size={iconSize - 4} />
+				<PencilLine size={iconSize} />
 				<P>Write</P>
 			</Button>
 		</Link>

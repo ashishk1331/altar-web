@@ -14,7 +14,7 @@ export default function SigninBanner() {
 					variant="outline"
 					className="text-white bg-indigo-400 hover:bg-indigo-400/80"
 				>
-					<LogIn size={iconSize - 4} />
+					<LogIn size={iconSize} />
 					<P>Login</P>
 				</Button>
 			</Link>

@@ -67,7 +67,7 @@ export default function ProfileRuler({
 						<DropdownContent>
 							<YStack className="p-2 bg-white rounded shadow-md items-start *:w-full">
 								<Button variant="outline" onClick={handleEdit}>
-									<PencilLine size={iconSize - 4} />
+									<PencilLine size={iconSize} />
 									<P>Edit</P>
 								</Button>
 								<Button
@@ -77,7 +77,7 @@ export default function ProfileRuler({
 									variant="outline"
 									className="text-red-500 hover:bg-red-50"
 								>
-									<Trash size={iconSize - 4} />
+									<Trash size={iconSize} />
 									<P>Delete</P>
 								</Button>
 							</YStack>

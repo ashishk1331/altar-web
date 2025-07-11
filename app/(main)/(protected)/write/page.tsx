@@ -83,7 +83,7 @@ export default function Write() {
 				value={title}
 				onChange={(e) => setTitle(e.target.value)}
 				placeholder="title here"
-				className="bg-white mt-4"
+				className="mt-4"
 				disabled={isLoading}
 			/>
 			<HR />
@@ -91,7 +91,7 @@ export default function Write() {
 				value={body}
 				onChange={(e) => setBody(e.target.value)}
 				placeholder="jot your thoughts here"
-				className="bg-white mb-8 md:mb-16"
+				className="mb-8 md:mb-16"
 				disabled={isLoading}
 			/>
 		</>
