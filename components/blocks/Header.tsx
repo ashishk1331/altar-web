@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, Bell, Search, UserRound } from "lucide-react";
+import { Bell, Search, UserRound } from "lucide-react";
 import Link from "next/link";
 import { navItems } from "@/constants/NavItems";
 import { iconSize } from "@/constants/tokens";
@@ -16,25 +16,14 @@ import { XStack, YStack } from "../ui/Stack";
 import Avatar from "./Avatar";
 import { useUserStore } from "@/store/userStore";
 import AFallback from "./AFallback";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
-	const router = useRouter();
-	const pathname = usePathname();
-	const isAtHome = pathname.split("/")[1] === "home";
-
 	return (
 		<header className="sticky top-0 flex items-center gap-4 w-full justify-between py-4 bg-white">
-			<XStack>
-				{!isAtHome && (
-					<Button variant="icon" onClick={router.back}>
-						<ArrowLeft size={iconSize} />
-					</Button>
-				)}
-				<Link href="/home">
-					<H3>Altar</H3>
-				</Link>
-			</XStack>
+			<Link href="/home">
+				<H3>Altar</H3>
+			</Link>
 			<AFallback fallback={<div />}>
 				<XStack>
 					<Link href="/notifications">
