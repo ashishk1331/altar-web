@@ -3,7 +3,7 @@ import { XStack, YStack } from "../ui/Stack";
 import { CircleCheck, ClockFading, Dot } from "lucide-react";
 import { iconSize } from "@/constants/tokens";
 import { Caption, P } from "../ui/Heading";
-import { twJoin, twMerge } from "tailwind-merge";
+import { twJoin } from "tailwind-merge";
 import { format, formatDistance } from "date-fns";
 
 type IssueProps = {
