@@ -18,19 +18,26 @@ import { api } from "@/convex/_generated/api";
 import { useAction } from "@/hooks/useAction";
 import { callToast } from "@/components/ui/Toast";
 import defaultAvatar from "@/public/default-avatar.webp";
+import { Doc } from "@/convex/_generated/dataModel";
 
 type CommentProps = {
 	isAuthor: boolean;
 	comment: CommentWithAuthor;
+	poem: Doc<"poems">;
 };
 
-export default function Comment({ isAuthor = false, comment }: CommentProps) {
+export default function Comment({
+	isAuthor = false,
+	comment,
+	poem,
+}: CommentProps) {
 	const { _id: commentId, body, author, authorId, _creationTime } = comment;
+	const { _id: poemId, authorId: poemAuthorId } = poem;
 
 	const deleteComment = useMutation(api.comments.deleteComment);
 	const { loading: isLoading, action: handleDelete } = useAction(
 		async function () {
-			await deleteComment({ commentId });
+			await deleteComment({ commentId, poemId, poemAuthorId, authorId });
 			callToast.success("Deleted your words.");
 		},
 	);

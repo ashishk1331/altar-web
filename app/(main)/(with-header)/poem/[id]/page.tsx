@@ -30,7 +30,7 @@ export default function PoemPage({ params }: PoemPageProps) {
 			<AFallback>
 				<CommentForm poem={poem} />
 			</AFallback>
-			<Forum comments={comments} />
+			<Forum poem={poem} comments={comments} />
 		</>
 	);
 }

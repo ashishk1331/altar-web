@@ -27,7 +27,7 @@ export default function SearchPage() {
 	} = usePaginatedQuery(
 		api.poems.searchPoem,
 		debouncedSearch ? { searchText: debouncedSearch } : "skip",
-		{ initialNumItems }
+		{ initialNumItems },
 	);
 
 	// Debounced callback to update the search term
@@ -80,15 +80,11 @@ export default function SearchPage() {
 						}
 					}}
 				/>
-				<Button
-					variant="icon"
-					disabled={isLoading}
-					onClick={handleSearch}
-				>
+				<Button variant="icon" disabled={isLoading} onClick={handleSearch}>
 					<Search size={iconSize} />
 				</Button>
 			</XStack>
-			
+
 			{poems.length > 0 ? (
 				<>
 					<Feed poems={poems} />
@@ -106,9 +102,9 @@ export default function SearchPage() {
 			) : (
 				<EmptyFeed
 					message={
-						hasSearched 
-							? isLoading 
-								? "Searching..." 
+						hasSearched
+							? isLoading
+								? "Searching..."
 								: "No poems found."
 							: "Start typing to search poems"
 					}

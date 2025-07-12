@@ -19,6 +19,7 @@ import type * as followers from "../followers.js";
 import type * as functions from "../functions.js";
 import type * as issues from "../issues.js";
 import type * as likes from "../likes.js";
+import type * as notifications from "../notifications.js";
 import type * as poems from "../poems.js";
 import type * as users from "../users.js";
 
@@ -37,6 +38,7 @@ declare const fullApi: ApiFromModules<{
   functions: typeof functions;
   issues: typeof issues;
   likes: typeof likes;
+  notifications: typeof notifications;
   poems: typeof poems;
   users: typeof users;
 }>;

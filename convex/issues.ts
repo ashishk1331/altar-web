@@ -14,7 +14,7 @@ export const writeIssue = mutation({
 });
 
 export const getIssuesByUser = query({
-	args: { 
+	args: {
 		authorId: v.id("users"),
 		paginationOpts: paginationOptsValidator,
 	},

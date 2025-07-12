@@ -9,3 +9,8 @@ export type PoemWithAuthor = Doc<"poems"> & {
 	isBookmarked?: boolean;
 	isLiked?: boolean;
 };
+
+export type NotificationWithNames = Doc<"notifications"> & {
+	poemTitle: string | null;
+	fromAuthorName: string | null;
+};

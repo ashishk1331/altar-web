@@ -54,9 +54,13 @@ export default function IconsTray({ poem }: IconsTrayProps) {
 	const [isLiked, setIsLiked] = useState(isAlreadyLiked);
 	const handleLikeDislike = useDebouncedCallback(async () => {
 		if (isLiked) {
-			await dislikePoem({ authorId: userId, poemId });
+			await dislikePoem({
+				authorId: userId,
+				poemId,
+				poemAuthorId: poem.authorId,
+			});
 		} else {
-			await likePoem({ authorId: userId, poemId });
+			await likePoem({ authorId: userId, poemId, poemAuthorId: poem.authorId });
 		}
 		setIsLiked(!isLiked);
 	}, debounceDelay);

@@ -12,7 +12,10 @@ export default defineSchema({
 	})
 		.index("by_author", ["authorId"])
 		.index("by_author_and_is_draft", ["authorId", "isDraft"])
-		.searchIndex("search_title", { searchField: "title", filterFields: ["isDraft"] }),
+		.searchIndex("search_title", {
+			searchField: "title",
+			filterFields: ["isDraft"],
+		}),
 
 	bookmarks: defineTable({
 		poemId: v.id("poems"),
@@ -57,5 +60,14 @@ export default defineSchema({
 		issue: v.string(),
 		authorId: v.id("users"),
 		status: v.union(v.literal("in_review"), v.literal("solved")),
+	}).index("by_author", ["authorId"]),
+
+	notifications: defineTable({
+		authorId: v.id("users"),
+		type: v.union(v.literal("like"), v.literal("comment")),
+		poemId: v.id("poems"),
+		fromAuthorId: v.id("users"),
+		createdAt: v.number(),
+		read: v.boolean(),
 	}).index("by_author", ["authorId"]),
 });

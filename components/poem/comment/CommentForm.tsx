@@ -21,14 +21,19 @@ export default function CommentForm({ poem }: CommentFormProps) {
 	const [body, setBody] = useState("");
 	const writeComment = useMutation(api.comments.writeComment);
 	const { picture, _id: authorId, name } = author;
-	const { _id: poemId } = poem;
+	const { _id: poemId, authorId: poemAuthorId } = poem;
 
 	const { loading: isLoading, action: handleSubmit } = useAction(
 		async function () {
 			if (!body) {
 				throw new Error("Write few words before.");
 			}
-			const ID = await writeComment({ authorId, poemId, body });
+			const ID = await writeComment({
+				poemId,
+				body,
+				poemAuthorId,
+				authorId,
+			});
 			if (!ID) throw new Error("Unable to create the poem.");
 			callToast.success("Comment published.");
 			setBody("");

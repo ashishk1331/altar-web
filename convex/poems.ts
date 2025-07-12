@@ -227,7 +227,7 @@ export const searchPoem = query({
 			.withSearchIndex("search_title", (q) =>
 				q.search("title", args.searchText),
 			)
-			.filter(q => q.and(q.eq(q.field("isDraft"), false)))
+			.filter((q) => q.and(q.eq(q.field("isDraft"), false)))
 			.paginate(args.paginationOpts);
 
 		const poemsWithAuthors = await Promise.all(
@@ -245,4 +245,4 @@ export const searchPoem = query({
 			page: poemsWithAuthors,
 		};
 	},
-})
+});
