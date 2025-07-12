@@ -218,3 +218,31 @@ export const deletePoem = mutation({
 	args: { poemId: v.id("poems") },
 	handler: async (ctx, args) => await ctx.db.delete(args.poemId),
 });
+
+export const searchPoem = query({
+	args: { paginationOpts: paginationOptsValidator, searchText: v.string() },
+	handler: async (ctx, args) => {
+		const paginatedPoems = await ctx.db
+			.query("poems")
+			.withSearchIndex("search_title", (q) =>
+				q.search("title", args.searchText),
+			)
+			.filter(q => q.and(q.eq(q.field("isDraft"), false)))
+			.paginate(args.paginationOpts);
+
+		const poemsWithAuthors = await Promise.all(
+			paginatedPoems.page.map(async (poem) => {
+				const author = await ctx.db.get(poem.authorId);
+				return {
+					...poem,
+					author,
+				};
+			}),
+		);
+
+		return {
+			...paginatedPoems,
+			page: poemsWithAuthors,
+		};
+	},
+})

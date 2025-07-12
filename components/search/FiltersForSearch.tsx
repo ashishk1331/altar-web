@@ -36,10 +36,8 @@ export default function FiltersForSearch() {
 	return (
 		<DropdownWrapper>
 			<DropdownTrigger>
-				<Button variant="icon" className="relative">
-					<Funnel size={iconSize} />
-					<div className="absolute top-0 right-0 w-2 h-2 -translate-x-full translate-y-full aspect-sqaure bg-indigo-500 rounded-full" />
-				</Button>
+				<Funnel size={iconSize} />
+				<div className="absolute top-0 right-0 w-2 h-2 -translate-x-full translate-y-full aspect-sqaure bg-indigo-500 rounded-full" />
 			</DropdownTrigger>
 			<DropdownContent left>
 				<YStack className="p-2 bg-white rounded shadow-xl mr-2 items-start gap-0 *:w-full">

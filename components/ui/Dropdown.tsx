@@ -50,7 +50,7 @@ export function DropdownTrigger({ children }: PropsWithChildren) {
 			type="button"
 			ref={triggerRef}
 			onClick={() => setIsDropdownOpen((prev) => !prev)}
-			className="cursor-pointer"
+			className="relative cursor-pointer"
 		>
 			{children}
 		</button>

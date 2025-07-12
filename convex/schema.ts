@@ -11,7 +11,8 @@ export default defineSchema({
 		isDraft: v.boolean(),
 	})
 		.index("by_author", ["authorId"])
-		.index("by_author_and_is_draft", ["authorId", "isDraft"]),
+		.index("by_author_and_is_draft", ["authorId", "isDraft"])
+		.searchIndex("search_title", { searchField: "title", filterFields: ["isDraft"] }),
 
 	bookmarks: defineTable({
 		poemId: v.id("poems"),
