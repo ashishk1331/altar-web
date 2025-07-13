@@ -17,7 +17,7 @@ export default function ToggleSwitch({
 			animate={{
 				backgroundColor: isOn
 					? "var(--color-indigo-500)"
-					: "var(--color-neutral-200)",
+					: "var(--color-neutral-500)",
 			}}
 			transition={{ duration: 0.2, ease: "easeInOut" }}
 		>

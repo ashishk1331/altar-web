@@ -5,5 +5,12 @@ type HRProps = {
 };
 
 export default function HR({ className: passedOnClassName }: HRProps) {
-	return <hr className={twMerge("text-neutral-200", passedOnClassName)} />;
+	return (
+		<hr
+			className={twMerge(
+				"text-neutral-200 dark:text-neutral-800",
+				passedOnClassName,
+			)}
+		/>
+	);
 }

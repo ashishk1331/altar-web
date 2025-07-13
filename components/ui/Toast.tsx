@@ -8,15 +8,27 @@ type CustomToastProps = {
 
 function CustomToast({ message, variant = "normal" }: CustomToastProps) {
 	return (
-		<div className="p-1.5 px-4 rounded border border-neutral-300 flex items-center gap-2 w-xs bg-white">
+		<div className="p-1.5 px-4 rounded border border-neutral-800 flex items-center gap-2 w-xs bg-neutral-50 dark:bg-neutral-900">
 			{variant === "success" ? (
-				<CircleCheck size={20} className="text-white fill-green-500" />
+				<CircleCheck
+					size={20}
+					className="text-neutral-50 fill-green-500 dark:stroke-neutral-900"
+				/>
 			) : variant === "error" ? (
-				<AlertCircle size={16} className="text-white fill-red-500" />
+				<AlertCircle
+					size={16}
+					className="text-neutral-50 fill-red-500 dark:stroke-neutral-900"
+				/>
 			) : variant === "bye" ? (
-				<Hand size={16} className="text-white fill-indigo-500" />
+				<Hand
+					size={16}
+					className="text-neutral-50 fill-indigo-500 dark:stroke-neutral-900"
+				/>
 			) : (
-				<Info size={16} className="text-white fill-neutral-500" />
+				<Info
+					size={16}
+					className="text-neutral-50 fill-neutral-500 dark:stroke-neutral-900"
+				/>
 			)}
 			<span>{message}</span>
 		</div>

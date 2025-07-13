@@ -20,7 +20,7 @@ import { useRouter } from "next/navigation";
 
 export default function Header() {
 	return (
-		<header className="sticky top-0 flex items-center gap-4 w-full justify-between py-4 bg-white">
+		<header className="sticky top-0 flex items-center gap-4 w-full justify-between py-4 bg-neutral-50 dark:bg-neutral-950">
 			<Link href="/home">
 				<H3>Altar</H3>
 			</Link>
@@ -28,13 +28,13 @@ export default function Header() {
 				<XStack>
 					<Link href="/notifications">
 						<Button variant="icon" className="relative">
-							<Bell size={iconSize} className="text-black" />
+							<Bell size={iconSize} />
 							<div className="absolute top-0 right-0 -translate-x-full translate-y-full w-2 h-2 aspect-sqaure rounded-full bg-red-500" />
 						</Button>
 					</Link>
 					<Link href="/search">
 						<Button variant="icon">
-							<Search size={iconSize} className="text-black" />
+							<Search size={iconSize} />
 						</Button>
 					</Link>
 					<AvatarWithDropdown />
@@ -59,10 +59,9 @@ function AvatarWithDropdown() {
 				/>
 			</DropdownTrigger>
 			<DropdownContent>
-				<YStack className="p-2 bg-white rounded shadow-xl items-start gap-0 *:w-full">
+				<YStack className="p-2 bg-neutral-50 dark:bg-neutral-900 rounded shadow-xl items-start gap-0 *:w-full">
 					<DropdownItem
 						onClick={() => router.push(`/author/${user?._id || ""}`)}
-						className="w-full hover:bg-neutral-50"
 					>
 						<UserRound size={iconSize} />
 						<P>Profile</P>

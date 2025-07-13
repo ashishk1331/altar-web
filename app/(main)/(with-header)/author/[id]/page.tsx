@@ -1,5 +1,6 @@
 import AuthorFeed from "@/components/author/AuthorFeed";
 import AuthorProfile from "@/components/author/AuthorProfile";
+import HR from "@/components/ui/HR";
 import { Id } from "@/convex/_generated/dataModel";
 
 type AuthorPageProps = {
@@ -12,7 +13,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
 	return (
 		<>
 			<AuthorProfile authorId={id} />
-			<hr className="text-neutral-200" />
+			<HR />
 			<AuthorFeed authorId={id} />
 		</>
 	);

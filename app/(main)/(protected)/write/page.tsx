@@ -15,9 +15,15 @@ import { XStack } from "@/components/ui/Stack";
 import { useEditStore } from "@/store/editStore";
 import { useShallow } from "zustand/shallow";
 import { Id } from "@/convex/_generated/dataModel";
+import { Filter } from "bad-words";
+import { Banana, Beef, ShieldBan } from "lucide-react";
+import { iconSize } from "@/constants/tokens";
+import { P } from "@/components/ui/Heading";
+import { twJoin } from "tailwind-merge";
 
 export default function Write() {
 	const router = useRouter();
+	const filter = new Filter();
 	const [draft, resetDraft] = useEditStore(
 		useShallow((state) => [state.draft, state.reset]),
 	);
@@ -57,6 +63,8 @@ export default function Write() {
 		}
 	}, [draft]);
 
+	const isProfane = filter.isProfane(body);
+
 	return (
 		<>
 			<BackNav
@@ -79,6 +87,14 @@ export default function Write() {
 					</XStack>
 				}
 			/>
+			<XStack>
+				{isProfane && (
+					<XStack className="bg-red-50 rounded px-2 py-0.5">
+						<ShieldBan size={iconSize * 1.2} className="stroke-red-500" />
+						<P>Profane</P>
+					</XStack>
+				)}
+			</XStack>
 			<Textarea
 				value={title}
 				onChange={(e) => setTitle(e.target.value)}

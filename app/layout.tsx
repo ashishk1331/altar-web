@@ -6,6 +6,8 @@ import { Toaster } from "react-hot-toast";
 import Container from "@/components/blocks/Container";
 import Tupperware from "@/components/blocks/Tupperware";
 import { ConvexClientProvider } from "@/provider/ConvexClientProvider";
+import { twMerge } from "tailwind-merge";
+import ThemeWrapper from "@/wrappers/ThemeWrapper";
 
 const barlow = Barlow({
 	variable: "--font-barlow",
@@ -26,16 +28,24 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`${barlow.variable} antialiased`}>
-				<GoogleOAuthProvider
-					clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? ""}
-				>
-					<ConvexClientProvider>
-						<Container>
-							<Tupperware>{children}</Tupperware>
-						</Container>
-					</ConvexClientProvider>
-				</GoogleOAuthProvider>
+			<body
+				className={twMerge(
+					barlow.variable,
+					"antialiased",
+					"dark:bg-neutral-950 dark:text-neutral-100",
+				)}
+			>
+				<ThemeWrapper>
+					<GoogleOAuthProvider
+						clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? ""}
+					>
+						<ConvexClientProvider>
+							<Container>
+								<Tupperware>{children}</Tupperware>
+							</Container>
+						</ConvexClientProvider>
+					</GoogleOAuthProvider>
+				</ThemeWrapper>
 				<Toaster position="bottom-right" reverseOrder />
 			</body>
 		</html>

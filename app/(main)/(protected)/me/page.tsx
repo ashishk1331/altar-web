@@ -90,14 +90,14 @@ export default function Profile() {
 				<Button
 					onClick={() => router.push("/report-issue")}
 					variant="outline"
-					className="text-red-500 hover:bg-red-50"
+					className="text-red-500 hover:bg-red-50 dark:text-red-500 dark:hover:bg-red-950"
 				>
 					<OctagonAlert size={iconSize} />
 					<P>Report Issue</P>
 				</Button>
 				<Button
 					variant="outline"
-					className="text-red-500 hover:bg-red-50"
+					className="text-red-500 hover:bg-red-50 dark:text-red-500 dark:hover:bg-red-950"
 					onClick={handleLogout}
 				>
 					<LogOut size={iconSize} />

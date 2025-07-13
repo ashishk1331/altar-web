@@ -60,7 +60,7 @@ export default function CommentForm({ poem }: CommentFormProps) {
 				disabled={isLoading}
 				onClick={handleSubmit}
 			>
-				<Send size={iconSize} className="text-black" />
+				<Send size={iconSize} />
 			</Button>
 		</XStack>
 	);

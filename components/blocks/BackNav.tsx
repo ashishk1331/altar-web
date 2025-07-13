@@ -21,9 +21,9 @@ export default function BackNav({
 	const router = useRouter();
 
 	return (
-		<XStack className="sticky top-0 w-full bg-white py-2">
+		<XStack className="sticky top-0 w-full bg-white dark:bg-neutral-950 py-2">
 			<Button variant="icon" disabled={disableBack} onClick={router.back}>
-				<ArrowLeft size={16} className="text-black" />
+				<ArrowLeft size={16} className="text-black dark:text-white" />
 			</Button>
 			{title && <P>{title}</P>}
 			{rightExtra}

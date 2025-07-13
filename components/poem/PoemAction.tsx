@@ -10,7 +10,7 @@ type PoemActionProps = {
 
 export default function PoemAction({ poem }: PoemActionProps) {
 	return (
-		<YStack className="py-8 gap-4 border-y border-neutral-300">
+		<YStack className="py-8 gap-4 border-y border-neutral-300 dark:border-neutral-800">
 			<ProfileRuler showSettings={false} poem={poem} />
 			<AFallback>
 				<IconsTray poem={poem} />

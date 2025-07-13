@@ -29,7 +29,7 @@ export default function Notifications() {
 			{results.length === 0 ? (
 				<EmptyFeed />
 			) : (
-				<YStack className="items-start divide-y divide-neutral-200 gap-0">
+				<YStack className="items-start divide-y divide-neutral-200 dark:divide-neutral-800 gap-0">
 					{results.map((notification) => (
 						<Notification key={notification._id} notification={notification} />
 					))}

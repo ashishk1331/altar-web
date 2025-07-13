@@ -71,16 +71,19 @@ export default function Comment({
 							<XStack className="ml-auto">
 								<DropdownWrapper>
 									<DropdownTrigger>
-										<Ellipsis size={16} className="text-black" />
+										<Ellipsis
+											size={16}
+											className="text-neutral-900 dark:text-neutral-100"
+										/>
 									</DropdownTrigger>
 									<DropdownContent>
-										<YStack className="p-2 bg-white rounded shadow-md">
+										<YStack className="p-2 bg-neutral-100 dark:bg-neutral-900 rounded shadow-md">
 											<Button
 												isLoading={isLoading}
 												disabled={isLoading}
 												onClick={handleDelete}
 												variant="outline"
-												className="text-red-500 hover:bg-red-50"
+												className="text-red-500 hover:bg-red-50 dark:hover:bg-red-900"
 											>
 												<Trash size={iconSize} />
 												<P>Delete</P>

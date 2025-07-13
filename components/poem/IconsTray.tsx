@@ -101,7 +101,10 @@ export default function IconsTray({ poem }: IconsTrayProps) {
 					{isBookmarked ? (
 						<BookmarkCheck size={iconSize} className="text-indigo-500" />
 					) : (
-						<Bookmark size={iconSize} className="text-black" />
+						<Bookmark
+							size={iconSize}
+							className="text-black dark:text-neutral-100"
+						/>
 					)}
 				</Button>
 			</AFallback>

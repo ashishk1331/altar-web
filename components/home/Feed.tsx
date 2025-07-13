@@ -9,7 +9,7 @@ type FeedProps = {
 
 export default function Feed({ poems = [], showSettings = false }: FeedProps) {
 	return (
-		<YStack className="w-full divide-y divide-neutral-200">
+		<YStack className="w-full divide-y divide-neutral-200 dark:divide-neutral-800">
 			{poems.map((poem) => (
 				<Poem key={poem._id} poem={poem} showSettings={showSettings} />
 			))}

@@ -22,15 +22,17 @@ export default function Button({
 	...rest
 }: ButtonProps) {
 	const variants: VariantDict = {
-		primary: "bg-indigo-600 text-white hover:bg-indigo-500",
-		outline: "text-black hover:bg-neutral-50",
-		icon: "text-black hover:bg-neutral-100 aspect-square",
+		primary:
+			"bg-indigo-600 text-white dark:text-neutral-900 dark:font-medium hover:bg-indigo-500",
+		outline:
+			"text-black dark:text-neutral-100 hover:bg-neutral-50 dark:hover:bg-neutral-900",
+		icon: "text-neutral-900 dark:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-900 aspect-square",
 	};
 
 	const loaderVariants: VariantDict = {
-		primary: "text-white",
-		outline: "text-black",
-		icon: "text-black",
+		primary: "text-white dark:text-neutral-900",
+		outline: "text-black dark:text-neutral-100",
+		icon: "text-black dark:text-neutral-100",
 	};
 
 	return (
@@ -38,7 +40,7 @@ export default function Button({
 			role={role}
 			onClick={onClick}
 			className={twMerge(
-				"p-1.5 px-3 flex items-center gap-2 rounded cursor-pointer active:scale-90 transition disabled:opacity-75 text-white",
+				"p-1.5 px-3 flex items-center gap-2 rounded cursor-pointer active:scale-90 transition disabled:opacity-75",
 				variants[variant],
 				passedOnClassName,
 			)}

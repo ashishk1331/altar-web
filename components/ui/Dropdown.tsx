@@ -93,7 +93,7 @@ export function DropdownContent({
 		<div
 			ref={contentRef}
 			className={twMerge(
-				"absolute top-full z-50 mt-2",
+				"absolute top-full z-50 mt-2 bg-neutral-50 dark:bg-neutral-900",
 				left ? "left-0" : "right-0",
 			)}
 		>
@@ -119,7 +119,10 @@ export function DropdownItem({
 		<Button
 			variant="outline"
 			onClick={handleClick}
-			className={twMerge(passedOnClassName, "hover:bg-neutral-50")}
+			className={twMerge(
+				passedOnClassName,
+				"hover:bg-neutral-50 dark:hover:bg-neutral-800",
+			)}
 			{...props}
 		>
 			{children}
