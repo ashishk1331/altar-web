@@ -14,11 +14,7 @@ export default function Notification({ notification }: NotificationProps) {
 		notification;
 
 	return (
-		<XStack
-			className={twJoin(
-				"w-full p-4 gap-4 rounded",
-			)}
-		>
+		<XStack className={twJoin("w-full p-4 gap-4 rounded")}>
 			{type === "like" ? (
 				<Heart size={iconSize * 1.2} className="fill-red-500 stroke-red-500" />
 			) : (

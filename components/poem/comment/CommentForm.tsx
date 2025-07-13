@@ -42,7 +42,12 @@ export default function CommentForm({ poem }: CommentFormProps) {
 
 	return (
 		<XStack className="mt-4">
-			<Avatar src={picture} alt={`Avatar of ${firstName} ${lastName}`} width={64} variant="lg" />
+			<Avatar
+				src={picture}
+				alt={`Avatar of ${firstName} ${lastName}`}
+				width={64}
+				variant="lg"
+			/>
 			<Textarea
 				value={body}
 				onChange={(e) => setBody(e.target.value)}

@@ -27,8 +27,9 @@ export default function Header() {
 			<AFallback fallback={<div />}>
 				<XStack>
 					<Link href="/notifications">
-						<Button variant="icon">
+						<Button variant="icon" className="relative">
 							<Bell size={iconSize} className="text-black" />
+							<div className="absolute top-0 right-0 -translate-x-full translate-y-full w-2 h-2 aspect-sqaure rounded-full bg-red-500" />
 						</Button>
 					</Link>
 					<Link href="/search">

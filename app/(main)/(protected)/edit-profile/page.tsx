@@ -32,7 +32,7 @@ export default function EditProfilePage() {
 			const payload: Partial<
 				Pick<Doc<"users">, "firstName" | "lastName" | "bio">
 			> = {};
-			if (firstName !== userDetails.firstName) {
+			if (firstName !== userDetails.firstName && firstName.length > 0) {
 				payload.firstName = userDetails.firstName;
 			}
 			if (lastName !== userDetails.lastName) {

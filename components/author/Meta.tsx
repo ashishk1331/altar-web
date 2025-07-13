@@ -55,7 +55,7 @@ export default function Meta({ author }: MetaProps) {
 			</P>
 			<XStack className="gap-4">
 				<CopyToClipboard
-					text={`Read poems by ${author.name} on https://thealtar.vercel.app/author/${authorId}`}
+					text={`Read poems by ${author.name} on ${process.env.NEXT_PUBLIC_BASE_URL}/author/${authorId}`}
 					onCopy={() => callToast.success("Copied to clipboard.")}
 				>
 					<Button variant="icon">
