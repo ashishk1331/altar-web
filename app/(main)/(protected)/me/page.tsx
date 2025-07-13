@@ -7,17 +7,37 @@ import Button from "@/components/ui/Button";
 import { P } from "@/components/ui/Heading";
 import { YStack } from "@/components/ui/Stack";
 import { navItems } from "@/constants/NavItems";
-import { iconSize } from "@/constants/tokens";
+import { debounceDelay, iconSize } from "@/constants/tokens";
 import { useUserStore } from "@/store/userStore";
 import { useShallow } from "zustand/shallow";
 import { callToast } from "@/components/ui/Toast";
 import { useRouter } from "next/navigation";
 import HR from "@/components/ui/HR";
+import ToggleBar from "@/components/blocks/ToggleBar";
+import { useConfigStore } from "@/store/configStore";
+import { useDebouncedCallback } from "use-debounce";
 
 export default function Profile() {
 	const router = useRouter();
 	const [user, resetUser] = useUserStore(
 		useShallow((state) => [state.user, state.resetUser]),
+	);
+	const [darkMode, toggleDarkMode, shutProfanity, toggleShutProfanity] =
+		useConfigStore(
+			useShallow((state) => [
+				state.darkMode,
+				state.toggleDarkMode,
+				state.shutProfanity,
+				state.toggleShutProfanity,
+			]),
+		);
+	const debouncedToggleDarkMode = useDebouncedCallback(
+		toggleDarkMode,
+		debounceDelay,
+	);
+	const debouncedToggleShutProfanity = useDebouncedCallback(
+		toggleShutProfanity,
+		debounceDelay,
 	);
 
 	function handleLogout() {
@@ -51,6 +71,22 @@ export default function Profile() {
 						<P>{label}</P>
 					</Button>
 				))}
+			</YStack>
+			<HR />
+			<YStack className="items-start gap-2 my-4 *:p-2 *:w-full">
+				<ToggleBar
+					label="Toggle dark mode"
+					isOn={darkMode}
+					setIsOn={debouncedToggleDarkMode}
+				/>
+				<ToggleBar
+					label="Toggle profanity filter"
+					isOn={shutProfanity}
+					setIsOn={debouncedToggleShutProfanity}
+				/>
+			</YStack>
+			<HR />
+			<YStack className="items-start gap-2 my-4 *:p-2 *:w-full">
 				<Button
 					onClick={() => router.push("/report-issue")}
 					variant="outline"
