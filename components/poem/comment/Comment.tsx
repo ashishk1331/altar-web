@@ -53,7 +53,7 @@ export default function Comment({
 			<YStack className="w-full items-start">
 				<XStack className="w-full">
 					<Link href={`/author/${authorId}`}>
-						<P>{author?.name ?? ""}</P>
+						<P>{author?.firstName ?? ""} {author?.lastName ?? ""}</P>
 					</Link>
 					{isAuthor && (
 						<Crown

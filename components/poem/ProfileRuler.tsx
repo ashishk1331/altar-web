@@ -53,7 +53,7 @@ export default function ProfileRuler({
 				variant="md"
 			/>
 			<Link href={`/author/${author?._id}`}>
-				<P>{author?.name ?? ""}</P>
+				<P>{author?.firstName ?? ""} {author?.lastName ?? ""}</P>
 			</Link>
 			<P className="text-neutral-400">
 				{formatDistance(poem._creationTime, new Date(), { addSuffix: true })}

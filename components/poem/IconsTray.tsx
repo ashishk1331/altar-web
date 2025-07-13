@@ -83,7 +83,7 @@ export default function IconsTray({ poem }: IconsTrayProps) {
 				{commentCount > 0 && <P>{commentCount}</P>}
 			</XStack>
 			<CopyToClipboard
-				text={`Read ${poem.title} by ${poem.author?.name} on https://thealtar.vercel.app/poem/${poem._id}`}
+				text={`Read ${poem.title} by ${(poem.author?.firstName ?? "") + (poem.author?.lastName ?? "")} on https://thealtar.vercel.app/poem/${poem._id}`}
 				onCopy={() => callToast.success("Copied to clipboard.")}
 			>
 				<Button variant="icon" className="ml-auto">

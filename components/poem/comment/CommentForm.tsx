@@ -20,7 +20,7 @@ export default function CommentForm({ poem }: CommentFormProps) {
 	const { user: author } = useUserContext();
 	const [body, setBody] = useState("");
 	const writeComment = useMutation(api.comments.writeComment);
-	const { picture, _id: authorId, name } = author;
+	const { picture, _id: authorId, firstName, lastName } = author;
 	const { _id: poemId, authorId: poemAuthorId } = poem;
 
 	const { loading: isLoading, action: handleSubmit } = useAction(
@@ -42,7 +42,7 @@ export default function CommentForm({ poem }: CommentFormProps) {
 
 	return (
 		<XStack className="mt-4">
-			<Avatar src={picture} alt={`Avatar of ${name}`} width={64} variant="lg" />
+			<Avatar src={picture} alt={`Avatar of ${firstName} ${lastName}`} width={64} variant="lg" />
 			<Textarea
 				value={body}
 				onChange={(e) => setBody(e.target.value)}
