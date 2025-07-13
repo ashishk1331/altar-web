@@ -16,10 +16,9 @@ import { useEditStore } from "@/store/editStore";
 import { useShallow } from "zustand/shallow";
 import { Id } from "@/convex/_generated/dataModel";
 import { Filter } from "bad-words";
-import { Banana, Beef, ShieldBan } from "lucide-react";
+import { ShieldBan } from "lucide-react";
 import { iconSize } from "@/constants/tokens";
 import { P } from "@/components/ui/Heading";
-import { twJoin } from "tailwind-merge";
 
 export default function Write() {
 	const router = useRouter();
