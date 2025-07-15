@@ -22,7 +22,7 @@ export default function Notification({ notification }: NotificationProps) {
 		if (!notification.read) {
 			markAsReadWithDelay();
 		}
-	}, [notification.read, notification._id, markAsRead]);
+	}, [notification.read, notification._id, markAsRead, markAsReadWithDelay]);
 
 	const getActionText = () => {
 		switch (notification.type) {
@@ -62,7 +62,7 @@ export default function Notification({ notification }: NotificationProps) {
 			</span>
 			<span className="font-medium">
 				<a href={`/poem/${notification.poem?._id}`} className="underline underline-offset-2">
-					"{notification.poem?.title}"
+					{notification.poem?.title}
 				</a>
 			</span>
 		</XStack>
