@@ -8,7 +8,7 @@ type CustomToastProps = {
 
 function CustomToast({ message, variant = "normal" }: CustomToastProps) {
 	return (
-		<div className="p-1.5 px-4 rounded border border-neutral-800 flex items-center gap-2 w-xs bg-neutral-50 dark:bg-neutral-900">
+		<div className="p-1.5 px-4 rounded border border-neutral-200 dark:border-neutral-800 flex items-center gap-2 w-xs bg-neutral-50 dark:bg-neutral-900">
 			{variant === "success" ? (
 				<CircleCheck
 					size={20}

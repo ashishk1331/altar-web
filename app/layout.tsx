@@ -32,7 +32,7 @@ export default function RootLayout({
 				className={twMerge(
 					barlow.variable,
 					"antialiased",
-					"dark:bg-neutral-950 dark:text-neutral-100",
+					"text-neutral-900 bg-neutral-50 dark:bg-neutral-950 dark:text-neutral-100",
 				)}
 			>
 				<ThemeWrapper>

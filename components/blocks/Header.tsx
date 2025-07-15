@@ -1,6 +1,5 @@
 "use client";
-
-import { Bell, Search, UserRound } from "lucide-react";
+import { Bell, Circle, Search, UserRound } from "lucide-react";
 import Link from "next/link";
 import { navItems } from "@/constants/NavItems";
 import { iconSize } from "@/constants/tokens";
@@ -17,8 +16,13 @@ import Avatar from "./Avatar";
 import { useUserStore } from "@/store/userStore";
 import AFallback from "./AFallback";
 import { useRouter } from "next/navigation";
+import { api } from "@/convex/_generated/api";
+import { useQuery } from "convex/react";
+import { Doc } from "@/convex/_generated/dataModel";
 
 export default function Header() {
+	const user = useUserStore((state) => state.user);
+
 	return (
 		<header className="sticky top-0 flex items-center gap-4 w-full justify-between py-4 bg-neutral-50 dark:bg-neutral-950">
 			<Link href="/home">
@@ -26,12 +30,7 @@ export default function Header() {
 			</Link>
 			<AFallback fallback={<div />}>
 				<XStack>
-					<Link href="/notifications">
-						<Button variant="icon" className="relative">
-							<Bell size={iconSize} />
-							<div className="absolute top-0 right-0 -translate-x-full translate-y-full w-2 h-2 aspect-sqaure rounded-full bg-red-500" />
-						</Button>
-					</Link>
+					{user && <NotificationButton user={user} />}
 					<Link href="/search">
 						<Button variant="icon">
 							<Search size={iconSize} />
@@ -44,10 +43,33 @@ export default function Header() {
 	);
 }
 
+type NotificationButtonProps = {
+	user: Doc<"users">;
+};
+
+function NotificationButton({ user }: NotificationButtonProps) {
+	const unreadCount = useQuery(api.notifications.getUnreadCount, {
+		userId: user._id,
+	});
+
+	return (
+		<Link href="/notifications">
+			<Button variant="icon" className="relative">
+				<Bell size={iconSize} />
+				{(unreadCount ?? 0) > 0 && (
+					<Circle
+						size={iconSize * 0.5}
+						className="absolute top-0 right-0 fill-red-500 stroke-red-500 -translate-x-full translate-y-full"
+					/>
+				)}
+			</Button>
+		</Link>
+	);
+}
+
 function AvatarWithDropdown() {
 	const user = useUserStore((state) => state.user);
 	const router = useRouter();
-
 	return (
 		<DropdownWrapper>
 			<DropdownTrigger>

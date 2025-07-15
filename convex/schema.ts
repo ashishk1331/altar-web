@@ -69,5 +69,7 @@ export default defineSchema({
 		fromAuthorId: v.id("users"),
 		createdAt: v.number(),
 		read: v.boolean(),
-	}).index("by_author", ["authorId"]),
+	})
+		.index("by_author", ["authorId"])
+		.index("by_author_and_read", ["authorId", "read"]),
 });

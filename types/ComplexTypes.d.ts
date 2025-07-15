@@ -11,6 +11,6 @@ export type PoemWithAuthor = Doc<"poems"> & {
 };
 
 export type NotificationWithNames = Doc<"notifications"> & {
-	poemTitle: string | null;
-	fromAuthorName: string | null;
+	poem: Doc<"poems"> | null;
+	fromAuthor: Doc<"users"> | null;
 };

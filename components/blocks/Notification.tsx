@@ -1,42 +1,70 @@
+import { api } from "@/convex/_generated/api";
 import { NotificationWithNames } from "@/types/ComplexTypes";
+import { useMutation } from "convex/react";
+import { useEffect } from "react";
+import { twMerge } from "tailwind-merge";
 import { XStack } from "../ui/Stack";
 import { Heart, MessageSquare } from "lucide-react";
-import { iconSize } from "@/constants/tokens";
-import { P } from "../ui/Heading";
-import { twJoin } from "tailwind-merge";
+import { debounceDelay, iconSize } from "@/constants/tokens";
+import { useDebouncedCallback } from "use-debounce";
 
-type NotificationProps = {
+interface NotificationProps {
 	notification: NotificationWithNames;
-};
+}
 
 export default function Notification({ notification }: NotificationProps) {
-	const { fromAuthorName, fromAuthorId, poemTitle, poemId, type } =
-		notification;
+	const markAsRead = useMutation(api.notifications.markAsRead);
+	const markAsReadWithDelay = useDebouncedCallback(() => {
+		markAsRead({ notificationId: notification._id });
+	}, debounceDelay * 20);
+
+	useEffect(() => {
+		if (!notification.read) {
+			markAsReadWithDelay();
+		}
+	}, [notification.read, notification._id, markAsRead]);
+
+	const getActionText = () => {
+		switch (notification.type) {
+			case "like":
+				return "liked your poem";
+			case "comment":
+				return "commented on your poem";
+			default:
+				return "interacted with your poem";
+		}
+	};
 
 	return (
-		<XStack className={twJoin("w-full p-4 gap-4 rounded")}>
-			{type === "like" ? (
-				<Heart size={iconSize * 1.2} className="fill-red-500 stroke-red-500" />
-			) : (
+		<XStack
+			className={twMerge(
+				"p-4 w-full",
+				notification.read
+					? "bg-white dark:bg-neutral-950"
+					: "bg-indigo-50 dark:bg-blue-900/20",
+			)}
+		>
+			{notification.type === "like" ? (
+				<Heart size={iconSize} className="fill-red-500 stroke-red-500" />
+			) : notification.type === "comment" ? (
 				<MessageSquare
-					size={iconSize * 1.2}
+					size={iconSize}
 					className="fill-indigo-500 stroke-indigo-500"
 				/>
-			)}
-
-			<XStack className="flex-wrap">
-				<a href={`/author/${fromAuthorId}`} className="hover:underline">
-					<P>
-						<b>{fromAuthorName}</b>
-					</P>
+			) : null}
+			<span className="font-medium ml-2">
+				<a href={`/author/${notification.fromAuthor?._id}`} className="underline underline-offset-2">
+					{`${notification.fromAuthor?.firstName} ${notification.fromAuthor?.lastName}`}
 				</a>
-				<P>{type === "like" ? "liked" : "commented on"}</P>
-				<a href={`/poem/${poemId}`} className="hover:underline">
-					<P>
-						<b>{poemTitle}</b>
-					</P>
+			</span>
+			<span className="text-neutral-600 dark:text-neutral-400">
+				{getActionText()}
+			</span>
+			<span className="font-medium">
+				<a href={`/poem/${notification.poem?._id}`} className="underline underline-offset-2">
+					"{notification.poem?.title}"
 				</a>
-			</XStack>
+			</span>
 		</XStack>
 	);
 }

@@ -1,5 +1,4 @@
 "use client";
-
 import { useUserContext } from "@/components/blocks/AFallback";
 import BackNav from "@/components/blocks/BackNav";
 import Notification from "@/components/blocks/Notification";
@@ -8,7 +7,8 @@ import Button from "@/components/ui/Button";
 import { YStack } from "@/components/ui/Stack";
 import { initialNumItems } from "@/constants/tokens";
 import { api } from "@/convex/_generated/api";
-import { usePaginatedQuery } from "convex/react";
+import { usePaginatedQuery, useMutation } from "convex/react";
+import { useEffect } from "react";
 
 export default function Notifications() {
 	const {
@@ -20,6 +20,15 @@ export default function Notifications() {
 		{ userId },
 		{ initialNumItems },
 	);
+
+	const markAllAsRead = useMutation(api.notifications.markAllAsRead);
+
+	// Mark all notifications as read when the page loads
+	useEffect(() => {
+		if (!isLoading && results.length > 0) {
+			markAllAsRead({ userId });
+		}
+	}, [isLoading, results.length, markAllAsRead, userId]);
 
 	if (isLoading) return null;
 

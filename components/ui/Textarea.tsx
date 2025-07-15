@@ -48,7 +48,7 @@ export default function Textarea({
 				ref={ref}
 				value={value}
 				className={twMerge(
-					"bg-neutral-50 dark:bg-neutral-900 rounded p-2 px-4 placeholder:text-neutral-400 dark:placeholder:text-neutral-600 border border-neutral-200 dark:border-neutral-800 outline-neutral-100 dark:outline-neutral-800 min-w-3xs resize-none overflow-hidden",
+					"bg-neutral-50 dark:bg-neutral-900 rounded p-2 px-4 placeholder:text-neutral-400 dark:placeholder:text-neutral-600 border border-neutral-200 dark:border-neutral-800 outline-none min-w-3xs resize-none overflow-hidden",
 					passedOnClassName,
 				)}
 				rows={1}
