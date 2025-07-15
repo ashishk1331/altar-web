@@ -38,8 +38,22 @@ export default function Hero() {
 	return (
 		<YStack>
 			<YStack className="my-12 justify-center">
+				<Image
+					width={512}
+					height={512}
+					alt="about"
+					src="/altar-light.svg"
+					className="block dark:hidden"
+				/>
+				<Image
+					width={512}
+					height={512}
+					alt="about"
+					src="/altar-dark.svg"
+					className="hidden dark:block"
+				/>
 				<H1>Join the safe place</H1>
-				<H3>for your writing rituals.</H3>
+				<H3>for your late night writing rituals.</H3>
 				<div className="my-8">
 					<AFallback
 						fallback={
@@ -50,14 +64,6 @@ export default function Hero() {
 					</AFallback>
 				</div>
 			</YStack>
-			<Image
-				src="/people.jpg"
-				width={1024}
-				height={720}
-				alt="Banner image."
-				className="scale-110 md:scale-none"
-				priority
-			/>
 		</YStack>
 	);
 }

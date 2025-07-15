@@ -85,8 +85,10 @@ export const markAllAsRead = mutation({
 export const deleteOldNotifications = internalMutation({
 	args: { daysOld: v.number() },
 	handler: async (ctx, args) => {
-		const cutoffDate = new Date(Date.now() - args.daysOld * 24 * 60 * 60 * 1000);
-    
+		const cutoffDate = new Date(
+			Date.now() - args.daysOld * 24 * 60 * 60 * 1000,
+		);
+
 		// Query notifications older than cutoff date
 		const oldNotifications = await ctx.db
 			.query("notifications")
@@ -97,7 +99,7 @@ export const deleteOldNotifications = internalMutation({
 		for (const notification of oldNotifications) {
 			await ctx.db.delete(notification._id);
 		}
-    
+
 		console.log(`Deleted ${oldNotifications.length} old notifications`);
 	},
 });

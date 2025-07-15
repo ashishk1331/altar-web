@@ -53,7 +53,10 @@ export default function Notification({ notification }: NotificationProps) {
 				/>
 			) : null}
 			<span className="font-medium ml-2">
-				<a href={`/author/${notification.fromAuthor?._id}`} className="underline underline-offset-2">
+				<a
+					href={`/author/${notification.fromAuthor?._id}`}
+					className="underline underline-offset-2"
+				>
 					{`${notification.fromAuthor?.firstName} ${notification.fromAuthor?.lastName}`}
 				</a>
 			</span>
@@ -61,7 +64,10 @@ export default function Notification({ notification }: NotificationProps) {
 				{getActionText()}
 			</span>
 			<span className="font-medium">
-				<a href={`/poem/${notification.poem?._id}`} className="underline underline-offset-2">
+				<a
+					href={`/poem/${notification.poem?._id}`}
+					className="underline underline-offset-2"
+				>
 					{notification.poem?.title}
 				</a>
 			</span>
