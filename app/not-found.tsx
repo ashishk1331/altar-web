@@ -14,14 +14,14 @@ export default function NotFound() {
 					height={512}
 					alt="about"
 					src="/404-light.svg"
-					className="block dark:hidden"
+					className="block dark:hidden max-w-48 aspect-sqaure"
 				/>
 				<Image
 					width={512}
 					height={512}
 					alt="about"
 					src="/404-dark.svg"
-					className="hidden dark:block"
+					className="hidden dark:block max-w-48 aspect-sqaure"
 				/>
 				<H3 className="mt-4">Not Found</H3>
 				<p>Could not find requested resource</p>

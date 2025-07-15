@@ -43,14 +43,14 @@ export default function Hero() {
 					height={512}
 					alt="about"
 					src="/altar-light.svg"
-					className="block dark:hidden"
+					className="block dark:hidden max-w-48 aspect-sqaure"
 				/>
 				<Image
 					width={512}
 					height={512}
 					alt="about"
 					src="/altar-dark.svg"
-					className="hidden dark:block"
+					className="hidden dark:block max-w-48 aspect-sqaure"
 				/>
 				<H1>Join the safe place</H1>
 				<H3>for your late night writing rituals.</H3>

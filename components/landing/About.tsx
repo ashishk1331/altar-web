@@ -10,14 +10,14 @@ export default function About() {
 				height={512}
 				alt="about"
 				src="/about-light.svg"
-				className="block dark:hidden"
+				className="block dark:hidden max-w-48 aspect-sqaure"
 			/>
 			<Image
 				width={512}
 				height={512}
 				alt="about"
 				src="/about-dark.svg"
-				className="hidden dark:block"
+				className="hidden dark:block max-w-48 aspect-sqaure"
 			/>
 			<H3 className="mb-2 mt-1">About</H3>
 			<P>

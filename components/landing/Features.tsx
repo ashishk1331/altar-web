@@ -51,14 +51,14 @@ function SingleFeature({ feature }: SingleFeatureProps) {
 				height={512}
 				alt="about"
 				src={lightImage}
-				className="block dark:hidden w-full object-cover md:col-start-2"
+				className="block dark:hidden w-full object-cover md:col-start-2 max-w-48 aspect-sqaure"
 			/>
 			<Image
 				width={512}
 				height={512}
 				alt="about"
 				src={darkImage}
-				className="hidden dark:block w-full object-cover md:col-start-2"
+				className="hidden dark:block w-full object-cover md:col-start-2 max-w-48 aspect-sqaure"
 			/>
 			<YStack className="w-full items-start">
 				<H3>{label}</H3>
