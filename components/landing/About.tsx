@@ -44,7 +44,7 @@ export default function About() {
 			<P>
 				So I said to myself, why not create a new place for others to drop by
 				and share those same old moments — and maybe even create some new ones
-				too. Hence, I present to you — <b>Altar</b>.
+				too. Hence, I present to you — <em>Altar</em>.
 			</P>
 			<P>
 				I will try to run this place for as long as I can, and I understand that
