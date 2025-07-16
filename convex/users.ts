@@ -1,4 +1,4 @@
-import { v } from "convex/values";
+import { ConvexError, v } from "convex/values";
 import { query } from "./_generated/server";
 import { mutation } from "./functions";
 import { Doc } from "./_generated/dataModel";
@@ -42,7 +42,7 @@ export const readUser = query({
 		const author = await ctx.db.get(args.authorId);
 
 		if (!author) {
-			return null;
+			throw new ConvexError({ message: "User not found.", code: 100 });
 		}
 
 		let isFollowing = false;
