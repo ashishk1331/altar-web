@@ -38,7 +38,7 @@ export default function Notification({ notification }: NotificationProps) {
 	return (
 		<XStack
 			className={twMerge(
-				"p-4 w-full",
+				"p-4 w-full flex-wrap gap-1",
 				notification.read
 					? "bg-white dark:bg-neutral-950"
 					: "bg-indigo-50 dark:bg-blue-900/20",
@@ -60,9 +60,9 @@ export default function Notification({ notification }: NotificationProps) {
 					{`${notification.fromAuthor?.firstName} ${notification.fromAuthor?.lastName}`}
 				</a>
 			</span>
-			<span className="text-neutral-600 dark:text-neutral-400">
-				{getActionText()}
-			</span>
+			
+			{getActionText().split(" ").map((word) => <span key={word} className="text-neutral-600 dark:text-neutral-400">{word}</span>)}
+			
 			<span className="font-medium">
 				<a
 					href={`/poem/${notification.poem?._id}`}
