@@ -9,9 +9,10 @@ import AFallback from "../blocks/AFallback";
 type PoemProps = {
 	poem: PoemWithAuthor;
 	showSettings: boolean;
+	showActions: boolean;
 };
 
-export default function Poem({ poem, showSettings }: PoemProps) {
+export default function Poem({ poem, showSettings, showActions }: PoemProps) {
 	const { title, body, _id: poemId } = poem;
 
 	return (
@@ -23,9 +24,11 @@ export default function Poem({ poem, showSettings }: PoemProps) {
 					<P>{body.substring(0, 42) + (body.length > 42 ? "..." : "")}</P>
 				</YStack>
 			</Link>
-			<AFallback>
-				<IconsTray poem={poem} />
-			</AFallback>
+			{showActions && (
+				<AFallback>
+					<IconsTray poem={poem} />
+				</AFallback>
+			)}
 		</YStack>
 	);
 }

@@ -8,6 +8,7 @@ import Tupperware from "@/components/blocks/Tupperware";
 import { ConvexClientProvider } from "@/provider/ConvexClientProvider";
 import { twMerge } from "tailwind-merge";
 import ThemeWrapper from "@/wrappers/ThemeWrapper";
+import { ModalWrapper } from "@/components/ui/Modal";
 
 const barlow = Barlow({
 	variable: "--font-barlow",
@@ -35,17 +36,19 @@ export default function RootLayout({
 					"text-neutral-900 bg-neutral-50 dark:bg-neutral-950 dark:text-neutral-100",
 				)}
 			>
-				<ThemeWrapper>
-					<GoogleOAuthProvider
-						clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? ""}
-					>
-						<ConvexClientProvider>
-							<Container>
-								<Tupperware>{children}</Tupperware>
-							</Container>
-						</ConvexClientProvider>
-					</GoogleOAuthProvider>
-				</ThemeWrapper>
+				<ModalWrapper>
+					<ThemeWrapper>
+						<GoogleOAuthProvider
+							clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? ""}
+						>
+							<ConvexClientProvider>
+								<Container>
+									<Tupperware>{children}</Tupperware>
+								</Container>
+							</ConvexClientProvider>
+						</GoogleOAuthProvider>
+					</ThemeWrapper>
+				</ModalWrapper>
 				<Toaster position="bottom-right" reverseOrder />
 			</body>
 		</html>

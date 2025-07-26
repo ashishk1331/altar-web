@@ -120,8 +120,8 @@ export function DropdownItem({
 			variant="outline"
 			onClick={handleClick}
 			className={twMerge(
+				"hover:bg-neutral-50 dark:hover:bg-neutral-800 border-none",
 				passedOnClassName,
-				"hover:bg-neutral-50 dark:hover:bg-neutral-800",
 			)}
 			{...props}
 		>

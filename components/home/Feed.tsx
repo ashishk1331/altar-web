@@ -5,13 +5,23 @@ import { PoemWithAuthor } from "@/types/ComplexTypes";
 type FeedProps = {
 	poems: PoemWithAuthor[];
 	showSettings?: boolean;
+	showActions?: boolean;
 };
 
-export default function Feed({ poems = [], showSettings = false }: FeedProps) {
+export default function Feed({
+	poems = [],
+	showSettings = false,
+	showActions = true,
+}: FeedProps) {
 	return (
 		<YStack className="w-full divide-y divide-neutral-200 dark:divide-neutral-800">
 			{poems.map((poem) => (
-				<Poem key={poem._id} poem={poem} showSettings={showSettings} />
+				<Poem
+					key={poem._id}
+					poem={poem}
+					showSettings={showSettings}
+					showActions={showActions}
+				/>
 			))}
 		</YStack>
 	);

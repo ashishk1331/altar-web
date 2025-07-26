@@ -25,7 +25,7 @@ export default function DraftFeed({ userId }: DraftFeedProps) {
 			) : results.length === 0 ? (
 				<EmptyFeed />
 			) : (
-				<Feed poems={results} />
+				<Feed showSettings showActions={false} poems={results} />
 			)}
 			{status === "CanLoadMore" && (
 				<Button onClick={() => loadMore(initialNumItems)}>Load more</Button>

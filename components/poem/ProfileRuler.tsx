@@ -5,6 +5,7 @@ import { XStack, YStack } from "../ui/Stack";
 import { formatDistance } from "date-fns";
 import {
 	DropdownContent,
+	DropdownItem,
 	DropdownTrigger,
 	DropdownWrapper,
 } from "../ui/Dropdown";
@@ -18,6 +19,8 @@ import { callToast } from "../ui/Toast";
 import { useEditStore } from "@/store/editStore";
 import { useRouter } from "next/navigation";
 import { PoemWithAuthor } from "@/types/ComplexTypes";
+import { useModal } from "../ui/Modal";
+import DeleteModal from "../ui/DeleteModal";
 
 type ProfileRulerProps = {
 	showSettings: boolean;
@@ -29,12 +32,14 @@ export default function ProfileRuler({
 	poem,
 }: ProfileRulerProps) {
 	const router = useRouter();
+	const { openModal, closeModal } = useModal();
 	const { author } = poem;
 	const deletePoem = useMutation(api.poems.deletePoem);
 	const { loading: isLoading, action: handleDelete } = useAction(
 		async function () {
 			await deletePoem({ poemId: poem._id });
 			callToast.success("Deleted your work.");
+			closeModal();
 		},
 	);
 	const setDraft = useEditStore((state) => state.setDraft);
@@ -64,24 +69,32 @@ export default function ProfileRuler({
 				<XStack className="ml-auto">
 					<DropdownWrapper>
 						<DropdownTrigger>
-							<Ellipsis size={16} className="text-black" />
+							<Ellipsis
+								size={16}
+								className="text-neutral-950 dark:text-neutral-100"
+							/>
 						</DropdownTrigger>
 						<DropdownContent>
-							<YStack className="p-2 bg-white rounded shadow-md items-start *:w-full">
-								<Button variant="outline" onClick={handleEdit}>
+							<YStack className="p-2 bg-neutral-50 dark:bg-neutral-900 rounded shadow-xl items-start gap-0 *:w-full">
+								<DropdownItem onClick={handleEdit}>
 									<PencilLine size={iconSize} />
 									<P>Edit</P>
-								</Button>
-								<Button
-									isLoading={isLoading}
-									disabled={isLoading}
-									onClick={handleDelete}
-									variant="outline"
+								</DropdownItem>
+								<DropdownItem
 									className="text-red-500 hover:bg-red-50"
+									onClick={() =>
+										openModal(
+											<DeleteModal
+												isLoading={isLoading}
+												closeModal={closeModal}
+												deleteAction={handleDelete}
+											/>,
+										)
+									}
 								>
 									<Trash size={iconSize} />
 									<P>Delete</P>
-								</Button>
+								</DropdownItem>
 							</YStack>
 						</DropdownContent>
 					</DropdownWrapper>

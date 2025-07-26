@@ -70,7 +70,7 @@ export default function IconsTray({ poem }: IconsTrayProps) {
 			<Button
 				variant="outline"
 				onClick={handleLikeDislike}
-				className={twJoin(isLiked && "hover:bg-red-50")}
+				className={twJoin("border-none", isLiked && "hover:bg-red-50")}
 			>
 				<Heart
 					size={iconSize}

@@ -25,7 +25,7 @@ export default function Button({
 		primary:
 			"bg-indigo-600 text-white dark:text-neutral-900 dark:font-medium hover:bg-indigo-500",
 		outline:
-			"text-black dark:text-neutral-100 hover:bg-neutral-50 dark:hover:bg-neutral-900",
+			"text-black dark:text-neutral-100 border border-neutral-300 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-900",
 		icon: "text-neutral-900 dark:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-900 aspect-square",
 	};
 

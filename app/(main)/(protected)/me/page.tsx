@@ -56,7 +56,7 @@ export default function Profile() {
 				<Button
 					onClick={() => router.push(`/author/${user._id}`)}
 					variant="outline"
-					className="hover:bg-neutral-50 rounded"
+					className="border-none"
 				>
 					<UserRound size={iconSize} />
 					<P>Profile</P>
@@ -66,6 +66,7 @@ export default function Profile() {
 						key={href}
 						onClick={() => router.push(href)}
 						variant="outline"
+						className="border-none"
 					>
 						<Icon size={iconSize} />
 						<P>{label}</P>
@@ -90,14 +91,14 @@ export default function Profile() {
 				<Button
 					onClick={() => router.push("/report-issue")}
 					variant="outline"
-					className="text-red-500 hover:bg-red-50 dark:text-red-500 dark:hover:bg-red-950"
+					className="text-red-500 hover:bg-red-50 dark:text-red-500 dark:hover:bg-red-950/25 border-none"
 				>
 					<OctagonAlert size={iconSize} />
 					<P>Report Issue</P>
 				</Button>
 				<Button
 					variant="outline"
-					className="text-red-500 hover:bg-red-50 dark:text-red-500 dark:hover:bg-red-950"
+					className="text-red-500 hover:bg-red-50 dark:text-red-500 dark:hover:bg-red-950/25 border-none"
 					onClick={handleLogout}
 				>
 					<LogOut size={iconSize} />

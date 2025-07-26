@@ -60,9 +60,15 @@ export default function Notification({ notification }: NotificationProps) {
 					{`${notification.fromAuthor?.firstName} ${notification.fromAuthor?.lastName}`}
 				</a>
 			</span>
-			
-			{getActionText().split(" ").map((word) => <span key={word} className="text-neutral-600 dark:text-neutral-400">{word}</span>)}
-			
+
+			{getActionText()
+				.split(" ")
+				.map((word) => (
+					<span key={word} className="text-neutral-600 dark:text-neutral-400">
+						{word}
+					</span>
+				))}
+
 			<span className="font-medium">
 				<a
 					href={`/poem/${notification.poem?._id}`}

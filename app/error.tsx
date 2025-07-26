@@ -1,16 +1,16 @@
-'use client'
- 
+"use client";
+
 import Header from "@/components/blocks/Header";
 import Button from "@/components/ui/Button";
 import { H3 } from "@/components/ui/Heading";
 import { YStack } from "@/components/ui/Stack";
 import Image from "next/image";
- 
+
 export default function Error({
 	error,
 }: {
-	error: Error & { digest?: string }
-	reset: () => void
+	error: Error & { digest?: string };
+	reset: () => void;
 }) {
 	return (
 		<>
@@ -37,5 +37,5 @@ export default function Error({
 				</a>
 			</YStack>
 		</>
-	)
+	);
 }
