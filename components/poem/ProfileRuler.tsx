@@ -80,7 +80,7 @@ export default function ProfileRuler({
 									<P>Edit</P>
 								</DropdownItem>
 								<DropdownItem
-									className="text-red-500 hover:bg-red-50"
+									className="hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/25"
 									onClick={() =>
 										openModal(
 											<DeleteModal
