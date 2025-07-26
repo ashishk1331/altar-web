@@ -14,7 +14,7 @@ export const YStack = forwardRef<HTMLDivElement, StackProps>(
 		>
 			{children}
 		</div>
-	)
+	),
 );
 YStack.displayName = "YStack";
 
@@ -27,6 +27,6 @@ export const XStack = forwardRef<HTMLDivElement, StackProps>(
 		>
 			{children}
 		</div>
-	)
+	),
 );
 XStack.displayName = "XStack";

@@ -18,16 +18,23 @@ export default function Poem({ poem, showSettings, showActions }: PoemProps) {
 	return (
 		<YStack className="w-full items-start py-4">
 			<ProfileRuler showSettings={showSettings} poem={poem} />
-			<Link href={`/poem/${poemId}`}>
+			{showActions ? (
+				<>
+					<Link href={`/poem/${poemId}`}>
+						<YStack className="items-start my-4">
+							<H3>{title}</H3>
+							<P>{body.substring(0, 42) + (body.length > 42 ? "..." : "")}</P>
+						</YStack>
+					</Link>
+					<AFallback>
+						<IconsTray poem={poem} />
+					</AFallback>
+				</>
+			) : (
 				<YStack className="items-start my-4">
 					<H3>{title}</H3>
 					<P>{body.substring(0, 42) + (body.length > 42 ? "..." : "")}</P>
 				</YStack>
-			</Link>
-			{showActions && (
-				<AFallback>
-					<IconsTray poem={poem} />
-				</AFallback>
 			)}
 		</YStack>
 	);
