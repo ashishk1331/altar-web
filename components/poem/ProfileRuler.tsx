@@ -10,7 +10,6 @@ import {
 	DropdownWrapper,
 } from "../ui/Dropdown";
 import { Ellipsis, PencilLine, Trash } from "lucide-react";
-import Button from "../ui/Button";
 import { iconSize } from "@/constants/tokens";
 import { useAction } from "@/hooks/useAction";
 import { useMutation } from "convex/react";

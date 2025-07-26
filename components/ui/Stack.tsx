@@ -1,26 +1,32 @@
-import type { HTMLAttributes, PropsWithChildren } from "react";
+import { forwardRef, type HTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 
 type StackProps = {
 	className?: string;
-} & PropsWithChildren &
-	HTMLAttributes<HTMLDivElement>;
+} & HTMLAttributes<HTMLDivElement>;
 
-export function YStack({ children, className, ...rest }: StackProps) {
-	return (
+export const YStack = forwardRef<HTMLDivElement, StackProps>(
+	({ children, className, ...rest }, ref) => (
 		<div
+			ref={ref}
 			className={twMerge("flex flex-col items-center gap-2", className)}
 			{...rest}
 		>
 			{children}
 		</div>
-	);
-}
+	)
+);
+YStack.displayName = "YStack";
 
-export function XStack({ children, className, ...rest }: StackProps) {
-	return (
-		<div className={twMerge("flex items-center gap-2", className)} {...rest}>
+export const XStack = forwardRef<HTMLDivElement, StackProps>(
+	({ children, className, ...rest }, ref) => (
+		<div
+			ref={ref}
+			className={twMerge("flex items-center gap-2", className)}
+			{...rest}
+		>
 			{children}
 		</div>
-	);
-}
+	)
+);
+XStack.displayName = "XStack";
