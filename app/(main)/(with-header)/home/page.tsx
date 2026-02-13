@@ -1,6 +1,7 @@
 "use client";
 
 import AFallback from "@/components/blocks/AFallback";
+import { XStack } from "@/components/ui/Stack";
 import Feed from "@/components/home/Feed";
 import FeedSkeleton from "@/components/home/FeedSkeleton";
 import Button from "@/components/ui/Button";
@@ -24,7 +25,14 @@ export default function Home() {
 			<Feed poems={results} />
 			<AFallback>
 				{status === "CanLoadMore" && (
-					<Button onClick={() => loadMore(initialNumItems)}>Load more</Button>
+					<XStack className="justify-around mt-8">
+						<Button 
+							className="w-fit" 
+							onClick={() => loadMore(initialNumItems)}
+						>
+							Load more
+						</Button>
+					</XStack>
 				)}
 			</AFallback>
 		</>

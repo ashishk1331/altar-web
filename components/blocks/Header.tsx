@@ -1,5 +1,5 @@
 "use client";
-import { Bell, Circle, Search, UserRound } from "lucide-react";
+import { Bell, ArrowLeft, Circle, Search, UserRound } from "lucide-react";
 import Link from "next/link";
 import { navItems } from "@/constants/NavItems";
 import { iconSize } from "@/constants/tokens";
@@ -15,19 +15,33 @@ import { XStack, YStack } from "../ui/Stack";
 import Avatar from "./Avatar";
 import { useUserStore } from "@/store/userStore";
 import AFallback from "./AFallback";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
 import { Doc } from "@/convex/_generated/dataModel";
+import { Euler } from "@/utils/url";
 
 export default function Header() {
 	const user = useUserStore((state) => state.user);
+	const pathname = new Euler(usePathname())
+	const isAtHome = pathname.isAt(0, "home")
+	const router = useRouter();
+
+	function goBack(){
+		router.back();
+	}
 
 	return (
-		<header className="sticky top-0 flex items-center gap-4 w-full justify-between py-4 bg-neutral-50 dark:bg-neutral-950">
-			<Link href="/home">
-				<H3>Altar</H3>
-			</Link>
+		<header className="sticky top-0 flex items-center gap-4 w-full justify-between py-2 bg-neutral-50 dark:bg-neutral-950">
+			<XStack>
+				{!isAtHome && <Button variant="icon" onClick={goBack}>
+						<ArrowLeft size={iconSize} />
+					</Button>
+				}
+				<Link href="/home">
+					<H3>Altar</H3>
+				</Link>
+			</XStack>
 			<AFallback fallback={<div />}>
 				<XStack>
 					{user && <NotificationButton user={user} />}

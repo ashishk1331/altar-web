@@ -6,6 +6,7 @@ import type { ReactNode } from "react";
 import Button from "../ui/Button";
 import { P } from "../ui/Heading";
 import { XStack } from "../ui/Stack";
+import { iconSize } from "@/constants/tokens"
 
 type BackNavProps = {
 	title?: string;
@@ -23,7 +24,7 @@ export default function BackNav({
 	return (
 		<XStack className="sticky top-0 w-full bg-neutral-50 dark:bg-neutral-950 py-2">
 			<Button variant="icon" disabled={disableBack} onClick={router.back}>
-				<ArrowLeft size={16} className="text-black dark:text-white" />
+				<ArrowLeft size={iconSize} className="text-black dark:text-white" />
 			</Button>
 			{title && <P>{title}</P>}
 			{rightExtra}
