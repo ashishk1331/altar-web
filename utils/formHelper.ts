@@ -1,8 +1,8 @@
-import type { ZodType, ZodTypeDef } from "zod";
+import type { ZodType } from "zod";
 
 export function zodValidate<T>(
 	values: T,
-	schema: ZodType<T, ZodTypeDef>,
+	schema: ZodType<T>,
 ): Record<string, string> {
 	const result = schema.safeParse(values);
 	if (result.success) return {};
