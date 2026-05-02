@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import { PoemWithAuthor } from "@/types/ComplexTypes";
 import { useModal } from "../ui/Modal";
 import DeleteModal from "../ui/DeleteModal";
+import { revalidateAuthor, revalidatePoem } from "@/app/actions/revalidate";
 
 type ProfileRulerProps = {
 	showSettings: boolean;
@@ -37,6 +38,10 @@ export default function ProfileRuler({
 	const { loading: isLoading, action: handleDelete } = useAction(
 		async function () {
 			await deletePoem({ poemId: poem._id });
+			await Promise.all([
+				revalidatePoem(poem._id),
+				revalidateAuthor(poem.authorId),
+			]);
 			callToast.success("Deleted your work.");
 			closeModal();
 		},

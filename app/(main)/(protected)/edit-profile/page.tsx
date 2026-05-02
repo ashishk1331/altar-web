@@ -17,6 +17,7 @@ import { useMutation } from "convex/react";
 import { View } from "lucide-react";
 import Link from "next/link";
 import { ChangeEvent, useState } from "react";
+import { revalidateAuthor } from "@/app/actions/revalidate";
 
 export default function EditProfilePage() {
 	const {
@@ -43,6 +44,7 @@ export default function EditProfilePage() {
 			}
 			updateLocalUser(payload);
 			await updateUser({ userId, ...payload });
+			await revalidateAuthor(userId);
 			callToast.success("Updated user details.");
 		},
 	);

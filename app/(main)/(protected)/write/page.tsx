@@ -19,6 +19,7 @@ import { Filter } from "bad-words";
 import { ShieldBan } from "lucide-react";
 import { iconSize } from "@/constants/tokens";
 import { P } from "@/components/ui/Heading";
+import { revalidateAuthor, revalidatePoem } from "@/app/actions/revalidate";
 
 export default function Write() {
 	const router = useRouter();
@@ -48,6 +49,13 @@ export default function Write() {
 					poemId,
 				});
 				if (!ID) throw new Error("Unable to create the poem.");
+				if (!isDraft) {
+					const publishedId = poemId ?? (ID as Id<"poems">);
+					await Promise.all([
+						revalidatePoem(publishedId),
+						revalidateAuthor(user._id),
+					]);
+				}
 				callToast.success(isDraft ? "Draft saved." : "Work published.");
 				resetDraft();
 				router.replace("/home");
