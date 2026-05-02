@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Altar
 
-## Getting Started
+A place to share your poems.
 
-First, run the development server:
+Altar is a social platform for writers — publish poems, follow other authors, bookmark favourites, and engage through likes and comments.
+
+## Features
+
+- **Write & publish** — compose poems, save drafts, and edit published work
+- **Discover** — home feed, search, and author pages
+- **Engage** — likes, comments, bookmarks, and follower notifications
+- **Profiles** — personal page (`/me`) with your posts, drafts, and bookmarks
+- **Auth** — Google OAuth sign-in
+- **Theming** — light and dark modes
+- **Moderation** — profanity filtering and an issue-reporting flow
+
+## Tech stack
+
+- **Framework** — [Next.js 16](https://nextjs.org) (App Router, Turbopack)
+- **Backend** — [Convex](https://convex.dev) for database, queries, mutations, and crons
+- **Auth** — [`@react-oauth/google`](https://github.com/MomenSherif/react-oauth)
+- **UI** — React 19, Tailwind CSS 4, Framer Motion, Lucide icons
+- **State & forms** — Zustand, Formik, Zod
+- **Tooling** — Bun, Biome, ESLint, TypeScript
+
+## Getting started
+
+Install dependencies and run the dev server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+bun install
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+In a second terminal, start Convex:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+bunx convex dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3000](http://localhost:3000).
 
-## Learn More
+### Environment
 
-To learn more about Next.js, take a look at the following resources:
+Create a `.env.local` with:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+NEXT_PUBLIC_CONVEX_URL=...
+NEXT_PUBLIC_GOOGLE_CLIENT_ID=...
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project structure
 
-## Deploy on Vercel
+```
+app/
+  (auth)/          sign-in, login, signup
+  (main)/
+    (protected)/   write, drafts, bookmarks, me, notifications, ...
+    (with-header)/ home, poem/[id], author/[id]
+components/        UI, blocks, landing
+convex/            schema and server functions (poems, comments, likes, ...)
+hooks/  store/  provider/  wrappers/  utils/  types/
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Scripts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `bun dev` — start the Next.js dev server (Turbopack)
+- `bun run build` — production build
+- `bun start` — run the production build
+- `bun run lint` — ESLint
